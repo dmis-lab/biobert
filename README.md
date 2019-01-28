@@ -1,5 +1,5 @@
 # BioBERT
-This repository provides fine-tuning codes of BioBERT, a language representation model for biomedical domain, especially designed for biomedical text mining tasks such as biomedical named entity recognition, relation extraction, question answering, etc. Please refer to our paper [BioBERT: pre-trained biomedical language representation model for biomedical text mining](https://arxiv.org/) for more details.
+This repository provides fine-tuning codes of BioBERT, a language representation model for biomedical domain, especially designed for biomedical text mining tasks such as biomedical named entity recognition, relation extraction, question answering, etc. Please refer to our paper [BioBERT: pre-trained biomedical language representation model for biomedical text mining](http://arxiv.org/abs/1901.08746) for more details.
 
 ## Installation
 To use BioBERT, we need pre-trained weights of BioBERT, which you can download from [Naver GitHub repository for BioBERT pre-trained weights](https://github.com/naver/biobert-pretrained). Note that this repository is based on the [BERT repository](https://github.com/google-research/bert) by Google. 
@@ -135,13 +135,13 @@ Please see LICENSE file for details. Downloading data indicates your acceptance 
 
 ## Citation
 
-For now, cite [the Arxiv paper](https://arxiv.org/):
+For now, cite [the Arxiv paper](http://arxiv.org/abs/1901.08746):
 
 ```
 @article{lee2019biobert,
   title={BioBERT: pre-trained biomedical language representation model for biomedical text mining},
   author={Lee, Jinhyuk and Yoon, Wonjin and Kim, Sungdong and Kim, Donghyeon and Kim, Sunkyu and So, Chan Ho and Kang, Jaewoo},
-  journal={arXiv preprint arXiv:},
+  journal={arXiv preprint arXiv:1901.08746},
   year={2019}
 }
 ```
