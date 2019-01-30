@@ -55,6 +55,7 @@ INFO:tensorflow:  global_step = 2571
 INFO:tensorflow:  loss = 25.894125
 ```
 (tips : You should go up a few lines to find the result. It comes before `INFO:tensorflow:**** Trainable Variables ****` )
+Note that the results are token-level evaluation measures, while the official evaluation should use entity-level evaluation measures. We will update our code for the entity-level evaluation used for internal tests, soon.
 
 ### Relation Extraction (RE)
 Download and unpack the RE datasets provided above (**[`Relation Extraction`](http://gofile.me/6pN25/aT0oswqfr)**). From now on, `$RE_DIR` indicates a folder for a single dataset. `{TASKNAME}` means the name of task such as gad or euadr. For example, `export RE_DIR=~/bioBERT/biodatasets/REdata/GAD/1` and `--task_name=gad`. Following command runs fine-tuining code on RE with default arguments.
