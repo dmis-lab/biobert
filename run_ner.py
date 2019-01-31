@@ -609,7 +609,7 @@ def main(_):
         prf = estimator.evaluate(input_fn=predict_input_fn, steps=None)
         output_predict_file = os.path.join(FLAGS.output_dir, "label_test.txt")
         with open(output_predict_file,'w') as writer:
-            tf.logging.info("***** TEST results *****")
+            tf.logging.info("***** token-level evaluation results *****")
             for key in sorted(prf.keys()):
                 tf.logging.info("  %s = %s", key, str(prf[key]))
             for prediction in result:

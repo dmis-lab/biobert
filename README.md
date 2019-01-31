@@ -2,7 +2,7 @@
 This repository provides fine-tuning codes of BioBERT, a language representation model for biomedical domain, especially designed for biomedical text mining tasks such as biomedical named entity recognition, relation extraction, question answering, etc. Please refer to our paper [BioBERT: a pre-trained biomedical language representation model for biomedical text mining](http://arxiv.org/abs/1901.08746) for more details.
 
 ## Updates
-*   **(Jan. 31th, 2019)** There is an [evaluation metric issue](https://github.com/dmis-lab/biobert/issues/3) regarding the NER results. We will update the code for entity-level metric and the arxiv paper with some new numbers. 
+*   **(Jan. 31th, 2019)** We've updated our code to resolve the [NER evaluation metric issue](https://github.com/dmis-lab/biobert/issues/3). The arxiv paper will be also updated with some new numbers. 
 
 ## Installation
 To use BioBERT, we need pre-trained weights of BioBERT, which you can download from [Naver GitHub repository for BioBERT pre-trained weights](https://github.com/naver/biobert-pretrained). Note that this repository is based on the [BERT repository](https://github.com/google-research/bert) by Google. 
@@ -11,7 +11,7 @@ All the fine-tuning experiments were conducted on a single TITAN Xp GPU machine 
 
 ## Datasets
 We provide pre-processed version of benchmark datasets for each task as follows:
-*   **[`Named Entity Recognition`](http://gofile.me/6pN25/avQHrfPRf)**: (17.3 MB), 8 datasets on biomedical named entity recognition
+*   **[`Named Entity Recognition`](http://gofile.me/6pN25/ivcNFHGZu)**: (17.3 MB), 8 datasets on biomedical named entity recognition
 *   **[`Relation Extraction`](http://gofile.me/6pN25/aT0oswqfr)**: (2.5 MB), 2 datasets on biomedical relation extraction
 *   **[`Question  Answering`](http://gofile.me/6pN25/C9iSvkPCr)**: (1.10 MB), 2 datasets on biomedical question answering task.
 
@@ -34,7 +34,7 @@ Due to the copyright issue of some datasets, we provide links of those datasets 
 After downloading one of the pre-trained models from [Naver GitHub repository for BioBERT pre-trained weights](https://github.com/naver/biobert-pretrained), unpack it to any directory you want, which we will denote as `$BIOBERT_DIR`. 
 
 ### Named Entity Recognition (NER)
-Download and unpack the NER datasets provided above (**[`Named Entity Recognition`](http://gofile.me/6pN25/avQHrfPRf)**). From now on, `$NER_DIR` indicates a folder for a single dataset which should include `train_dev.tsv`, `train.tsv`, `devel.tsv` and `test.tsv`. For example, `export NER_DIR=~/bioBERT/biodatasets/NERdata/NCBI-disease`. Following command runs fine-tuining code on NER with default arguments.
+Download and unpack the NER datasets provided above (**[`Named Entity Recognition`](http://gofile.me/6pN25/ivcNFHGZu)**). From now on, `$NER_DIR` indicates a folder for a single dataset which should include `train_dev.tsv`, `train.tsv`, `devel.tsv` and `test.tsv`. For example, `export NER_DIR=~/bioBERT/biodatasets/NERdata/NCBI-disease`. Following command runs fine-tuining code on NER with default arguments.
 ```
 mkdir /tmp/bioner/
 python run_ner.py \
@@ -48,9 +48,9 @@ python run_ner.py \
     --output_dir=/tmp/bioner/
 ```
 You can change the arguments as you want. Once you have trained your model, you can use it in inference mode by using `--do_train=false --do_predict=true` for evaluating `test.tsv`.
-The result will be printed as stdout format. For example, the result for NCBI-disease dataset will be like this:
+The token-level evaluation result will be printed as stdout format. For example, the result for NCBI-disease dataset will be like this:
 ```
-INFO:tensorflow:***** TEST results *****
+INFO:tensorflow:***** token-level evaluation results *****
 INFO:tensorflow:  eval_f = 0.9028707
 INFO:tensorflow:  eval_precision = 0.8839457
 INFO:tensorflow:  eval_recall = 0.92273223
@@ -59,7 +59,28 @@ INFO:tensorflow:  loss = 25.894125
 ```
 (tips : You should go up a few lines to find the result. It comes before `INFO:tensorflow:**** Trainable Variables ****` )
 
-Note that the results are token-level evaluation measures while the official evaluation should use entity-level evaluation measures. We will update our code for the entity-level evaluation used for internal tests, soon. The reported numbers in our arxiv paper will be updated accordingly, but we still observed SOTA performance on 4 NER datasets using BioBERT (Wiki + Books + PubMed + PMC). 
+Note that this result is the token-level evaluation measure while the official evaluation should use the entity-level evaluation measure. 
+The results of `python run_ner.py` will be recorded as two files: `token_test.txt` and `label_test.txt` in `output_dir`. 
+Use `ner_detokenize.py` in `./biocodes/` to obtain word level prediction file.
+```
+python biocodes/ner_detokenize.py \
+--token_test_path=/tmp/bioner/token_test.txt \
+--label_test_path=/tmp/bioner/label_test.txt \
+--answer_path=$NER_DIR/test.tsv \
+--output_dir=/tmp/bioner
+```
+This will generate `NER_result_conll.txt` in `output_dir`.
+Use `conlleval.pl` in `./biocodes/` for entity-level exact match evaluation results.
+```
+perl biocodes/conlleval.pl < /tmp/bioner/NER_result_conll.txt
+```
+
+The entity-level results for NCBI-disease dataset will be like :
+```
+processed 24497 tokens with 960 phrases; found: 993 phrases; correct: 866.
+accuracy:  98.57%; precision:  87.21%; recall:  90.21%; FB1:  88.68
+             MISC: precision:  87.21%; recall:  90.21%; FB1:  88.68  993
+``` 
 
 ### Relation Extraction (RE)
 Download and unpack the RE datasets provided above (**[`Relation Extraction`](http://gofile.me/6pN25/aT0oswqfr)**). From now on, `$RE_DIR` indicates a folder for a single dataset. `{TASKNAME}` means the name of task such as gad or euadr. For example, `export RE_DIR=~/bioBERT/biodatasets/REdata/GAD/1` and `--task_name=gad`. Following command runs fine-tuining code on RE with default arguments.
