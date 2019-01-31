@@ -2,7 +2,7 @@
 This repository provides fine-tuning codes of BioBERT, a language representation model for biomedical domain, especially designed for biomedical text mining tasks such as biomedical named entity recognition, relation extraction, question answering, etc. Please refer to our paper [BioBERT: a pre-trained biomedical language representation model for biomedical text mining](http://arxiv.org/abs/1901.08746) for more details.
 
 ## Updates
-*   **(Jan. 31th, 2019)** We've updated our code to resolve the [NER evaluation metric issue](https://github.com/dmis-lab/biobert/issues/3). Please read Fine-tuning BioBERT - NER part of this README. The arxiv paper will be also updated with some new numbers. 
+*   **(Jan. 31th, 2019)** We've updated our code to resolve the [NER evaluation metric issue](https://github.com/dmis-lab/biobert/issues/3). Please read [Fine-tuning BioBERT - NER](https://github.com/dmis-lab/biobert#named-entity-recognition-ner) part of this README. The arxiv paper will be also updated with some new numbers. 
 
 ## Installation
 To use BioBERT, we need pre-trained weights of BioBERT, which you can download from [Naver GitHub repository for BioBERT pre-trained weights](https://github.com/naver/biobert-pretrained). Note that this repository is based on the [BERT repository](https://github.com/google-research/bert) by Google. 
