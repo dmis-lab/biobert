@@ -615,7 +615,7 @@ def main(_):
             for prediction in result:
                 #Temporary fix for padding error (which occasionally cause mismatch between the number of predicted tokens and labels.)
                 chkresult = "".join(str(id) for id in prediction)
-                if '0' != chkresult[chkresult.find('0')+1]:
+                if (len(chkresult)-1 < chkresult.find('0')) and ('0' != chkresult[chkresult.find('0')+1]):
                     prediction[chkresult.find('0')] = 3 #change to O tag
                 output_line = "\n".join(id2label[id] for  id in prediction if id!=0) + "\n"
                 writer.write(output_line)
