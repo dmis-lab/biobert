@@ -613,7 +613,11 @@ def main(_):
             for key in sorted(prf.keys()):
                 tf.logging.info("  %s = %s", key, str(prf[key]))
             for prediction in result:
-                output_line = "\n".join(id2label[id] for id in prediction if id!=0) + "\n"
+                #Temporary fix for padding error (which occasionally cause mismatch between the number of predicted tokens and labels.)
+                chkresult = "".join(str(id) for id in prediction)
+                if '0' != chkresult[chkresult.find('0')+1]:
+                    prediction[chkresult.find('0')] = 3 #change to O tag
+                output_line = "\n".join(id2label[id] for  id in prediction if id!=0) + "\n"
                 writer.write(output_line)
 
 if __name__ == "__main__":
