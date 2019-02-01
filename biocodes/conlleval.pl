@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 # conlleval: evaluate result of processing CoNLL-2000 shared task
 # usage:     conlleval [-l] [-r] [-d delimiterTag] [-o oTag] < file
-#            README: http://cnts.uia.ac.be/conll2000/chunking/output.html
+#            README: http://www.clips.uantwerpen.be/conll2000/chunking/output.html
 # options:   l: generate LaTeX output for tables like in
 #               http://cnts.uia.ac.be/conll2003/ner/example.tex
 #            r: accept raw result tags (without B- and I- prefix;
@@ -14,7 +14,7 @@
 #            guessed tag in that order. Sentences should be
 #            separated from each other by empty lines or lines
 #            with $boundary fields (default -X-).
-# url:       http://lcg-www.uia.ac.be/conll2000/chunking/
+# url:       http://www.clips.uantwerpen.be/conll2000/chunking/
 # started:   1998-09-25
 # version:   2004-01-26
 # author:    Erik Tjong Kim Sang <erikt@uia.ua.ac.be>
