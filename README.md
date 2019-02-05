@@ -82,6 +82,7 @@ processed 24497 tokens with 960 phrases; found: 993 phrases; correct: 866.
 accuracy:  98.57%; precision:  87.21%; recall:  90.21%; FB1:  88.68
              MISC: precision:  87.21%; recall:  90.21%; FB1:  88.68  993
 ``` 
+Note that this is a sample run of an NER model. Performance of NER models usually converges at more than 50 epochs (learning rate = 1e-5 is recommended).
 
 ### Relation Extraction (RE)
 Download and unpack the RE datasets provided above (**[`Relation Extraction`](http://gofile.me/6pN25/aT0oswqfr)**). From now on, `$RE_DIR` indicates a folder for a single dataset. `{TASKNAME}` means the name of task such as gad or euadr. For example, `export RE_DIR=~/bioBERT/biodatasets/REdata/GAD/1` and `--task_name=gad`. Following command runs fine-tuining code on RE with default arguments.
