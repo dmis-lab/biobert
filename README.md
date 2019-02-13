@@ -120,7 +120,7 @@ Please be aware that you have to move `output_dir` to make new model. As some RE
 ### Question Answering (QA)
 To download QA datasets, you should register in [BioASQ website](http://participants-area.bioasq.org). After the registration, download **[`BioASQ Task B`](http://participants-area.bioasq.org/Tasks/A/getData/)** data, and unpack it to some directory `$BIOASQ_DIR`. Finally, download **[`Question Answering`](http://gofile.me/6pN25/C9iSvkPCr)**, our pre-processed version of BioASQ-4/5b datasets, and unpack it to `$BIOASQ_DIR`.
 
-Pleas use `BioASQ-*.json` for training and testing the model. This is necessary as the input data format of BioBERT is different from BioASQ dataset format. Also, please be informed that the do_lower_case flag should be set as `--do_lower_case=False`. Following command runs fine-tuining code on QA with default arguments.
+Please use `BioASQ-*.json` for training and testing the model. This is necessary as the input data format of BioBERT is different from BioASQ dataset format. Also, please be informed that the do_lower_case flag should be set as `--do_lower_case=False`. Following command runs fine-tuining code on QA with default arguments.
 ```
 python run_qa.py \
      --do_train=True \
