@@ -103,7 +103,7 @@ python run_re.py \
     --data_dir=$RE_DIR/ \
     --output_dir=/tmp/RE_output/ 
 ```
-The predictions will be saved into a file called `test_results.tsv` in the `output_dir`. Once you have trained your model, you can use it in inference mode by using `--do_train=false --do_predict=true` for evaluating test.tsv. Use `./biocodes/re_eval.py` in `./biocodes/` folder for evaluation.
+The predictions will be saved into a file called `test_results.tsv` in the `output_dir`. Once you have trained your model, you can use it in inference mode by using `--do_train=false --do_predict=true` for evaluating test.tsv. Use `./biocodes/re_eval.py` in `./biocodes/` folder for evaluation. Also, note that CHEMPROT dataset is a multi-class classification dataset, and current version of `run_re.py` only supports binary classification (you have to modify `run_re.py` accordingly).
 ```
 python ./biocodes/re_eval.py --output_path={output_dir}/test_results.tsv --answer_path=$RE_DIR/test.tsv
 ```
