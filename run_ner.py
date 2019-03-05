@@ -389,7 +389,7 @@ def create_model(bert_config, is_training, input_ids, input_mask,
         loss = tf.reduce_sum(per_example_loss)
         probabilities = tf.nn.softmax(logits, axis=-1)
         predict = tf.argmax(probabilities,axis=-1)
-        return (loss, per_example_loss, logits,predict)
+        return (loss, per_example_loss, logits, log_probs, predict)
         ##########################################################################
         
 def model_fn_builder(bert_config, num_labels, init_checkpoint, learning_rate,
@@ -406,14 +406,13 @@ def model_fn_builder(bert_config, num_labels, init_checkpoint, learning_rate,
         #label_mask = features["label_mask"]
         is_training = (mode == tf.estimator.ModeKeys.TRAIN)
 
-        (total_loss,  per_example_loss,logits,predicts) = create_model(
+        (total_loss,  per_example_loss, logits, log_probs, predicts) = create_model(
             bert_config, is_training, input_ids, input_mask,segment_ids, label_ids,
             num_labels, use_one_hot_embeddings)
         tvars = tf.trainable_variables()
         scaffold_fn = None
         if init_checkpoint:
             (assignment_map, initialized_variable_names) = modeling.get_assignment_map_from_checkpoint(tvars,init_checkpoint)
-            tf.train.init_from_checkpoint(init_checkpoint, assignment_map)
             if use_tpu:
                 def tpu_scaffold():
                     tf.train.init_from_checkpoint(init_checkpoint, assignment_map)
@@ -438,8 +437,7 @@ def model_fn_builder(bert_config, num_labels, init_checkpoint, learning_rate,
                 loss=total_loss,
                 train_op=train_op,
                 scaffold_fn=scaffold_fn)
-        elif mode == tf.estimator.ModeKeys.EVAL:
-            
+        elif mode == tf.estimator.ModeKeys.EVAL:      
             def metric_fn(per_example_loss, label_ids, logits):
             # def metric_fn(label_ids, logits):
                 predictions = tf.argmax(logits, axis=-1, output_type=tf.int32)
@@ -460,9 +458,12 @@ def model_fn_builder(bert_config, num_labels, init_checkpoint, learning_rate,
                 loss=total_loss,
                 eval_metrics=eval_metrics,
                 scaffold_fn=scaffold_fn)
-        else:
+        
+        elif mode == tf.estimator.ModeKeys.PREDICT:
             output_spec = tf.contrib.tpu.TPUEstimatorSpec(
-                mode = mode,predictions= predicts,scaffold_fn=scaffold_fn
+                mode=mode,
+                predictions={"prediction": predicts, "log_probs": log_probs},
+                scaffold_fn=scaffold_fn
             )
         return output_spec
     return model_fn
@@ -605,20 +606,36 @@ def main(_):
             is_training=False,
             drop_remainder=predict_drop_remainder)
 
-        result = estimator.predict(input_fn=predict_input_fn)
+        tokens = list()
+        with open(token_path, 'r') as reader:
+            for line in reader:
+                tok = line.strip()
+                if tok == '[CLS]':
+                    tmp_toks = [tok]
+                elif tok == '[SEP]':
+                    tmp_toks.append(tok)
+                    tokens.append(tmp_toks)
+                else:
+                    tmp_toks.append(tok)
+        
         prf = estimator.evaluate(input_fn=predict_input_fn, steps=None)
-        output_predict_file = os.path.join(FLAGS.output_dir, "label_test.txt")
-        with open(output_predict_file,'w') as writer:
-            tf.logging.info("***** token-level evaluation results *****")
-            for key in sorted(prf.keys()):
+        tf.logging.info("***** token-level evaluation results *****")
+        for key in sorted(prf.keys()):
                 tf.logging.info("  %s = %s", key, str(prf[key]))
-            for prediction in result:
-                #Temporary fix for padding error (which occasionally cause mismatch between the number of predicted tokens and labels.)
-                chkresult = "".join(str(id) for id in prediction)
-                if (len(chkresult)-1 < chkresult.find('0')) and ('0' != chkresult[chkresult.find('0')+1]):
-                    prediction[chkresult.find('0')] = 3 #change to O tag
-                output_line = "\n".join(id2label[id] for  id in prediction if id!=0) + "\n"
-                writer.write(output_line)
+
+        result = estimator.predict(input_fn=predict_input_fn)
+        output_predict_file = os.path.join(FLAGS.output_dir, "label_test.txt")
+        output_logits_file = os.path.join(FLAGS.output_dir, "logits_test.txt")
+        with open(output_predict_file,'w') as p_writer:
+            with open(output_logits_file,'w') as l_writer:
+                for pidx, prediction in enumerate(result):
+                    slen = len(tokens[pidx])
+                    
+                    output_line = "\n".join(id2label[id] if id!=0 else id2label[3] for id in prediction['prediction'][:slen]) + "\n" #change to O tag
+                    p_writer.write(output_line)
+                     
+                    output_line = "\n".join('\t'.join(str(log_prob) for log_prob in log_probs) for log_probs in prediction['log_probs'][:slen]) + "\n" 
+                    l_writer.write(output_line)
 
 if __name__ == "__main__":
     flags.mark_flag_as_required("data_dir")
@@ -627,5 +644,3 @@ if __name__ == "__main__":
     flags.mark_flag_as_required("bert_config_file")
     flags.mark_flag_as_required("output_dir")
     tf.app.run()
-
-
