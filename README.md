@@ -3,10 +3,9 @@ This repository provides fine-tuning codes of BioBERT, a language representation
 
 ## Updates
 *   **(3 Feb 2019)** Updated our [arxiv paper](http://arxiv.org/abs/1901.08746).
-*   **(31 Jan 2019)** Resolved [NER evaluation metric issue](https://github.com/dmis-lab/biobert/issues/3).
 
 ## Installation
-To use BioBERT, we need pre-trained weights of BioBERT, which you can download from [Naver GitHub repository for BioBERT pre-trained weights](https://github.com/naver/biobert-pretrained). Note that this repository is based on the [BERT repository](https://github.com/google-research/bert) by Google. 
+To use BioBERT, we need pre-trained weights of BioBERT, which you can download from [Naver GitHub repository for BioBERT pre-trained weights](https://github.com/naver/biobert-pretrained). Make sure to specify the versions of pre-trained weights used in your works. Also, note that this repository is based on the [BERT repository](https://github.com/google-research/bert) by Google.
 
 All the fine-tuning experiments were conducted on a single TITAN Xp GPU machine which has 12GB of RAM. The code was tested with Python2 and Python3 (We used Python2 for experiments). You might want to install `java` to use official evaluation script of BioASQ. See `requirements.txt` for other details.
 
