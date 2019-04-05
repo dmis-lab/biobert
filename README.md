@@ -2,6 +2,7 @@
 This repository provides fine-tuning codes of BioBERT, a language representation model for biomedical domain, especially designed for biomedical text mining tasks such as biomedical named entity recognition, relation extraction, question answering, etc. Please refer to our paper [BioBERT: a pre-trained biomedical language representation model for biomedical text mining](http://arxiv.org/abs/1901.08746) for more details.
 
 ## Updates
+*   **(5 Apr 2019)** A new version of BioBERT (v1.1) will be available, soon. Please specify the version of BioBERT (currently [v1.0](https://github.com/naver/biobert-pretrained/releases) is only available) when using BioBERT.
 *   **(3 Feb 2019)** Updated our [arxiv paper](http://arxiv.org/abs/1901.08746).
 
 ## Installation
@@ -156,6 +157,12 @@ As our model is only on factoid questions, the result will be like
 ```
 where the second, third and fourth numbers will be SAcc, LAcc and MRR of factoid questions respectively.
 Note that we pre-trained our model on SQuAD dataset to get the state-of-the-art performance. Please check our paper for details.
+
+## FAQ
+*   [How can I use BioBERT with PyTorch?](https://github.com/dmis-lab/biobert/issues/2)
+*   [Can I get word/sentence embeddings using BioBERT?](https://github.com/dmis-lab/biobert/issues/23)
+*   [How can I pre-train QA models on SQuAD?](https://github.com/dmis-lab/biobert/issues/10)
+*   [What vocabulary does BioBERT use?](https://github.com/naver/biobert-pretrained/issues/1)
 
 ## License and Disclaimer
 Please see LICENSE file for details. Downloading data indicates your acceptance of our disclaimer.
