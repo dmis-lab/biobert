@@ -14,7 +14,7 @@ All the fine-tuning experiments were conducted on a single TITAN Xp GPU machine 
 We provide pre-processed version of benchmark datasets for each task as follows:
 *   **[`Named Entity Recognition`](https://drive.google.com/open?id=1OletxmPYNkz2ltOr9pyT0b0iBtUWxslh)**: (17.3 MB), 8 datasets on biomedical named entity recognition
 *   **[`Relation Extraction`](https://drive.google.com/open?id=1-jDKGcXREb2X9xTFnuiJ36PvsqoyHWcw)**: (2.5 MB), 2 datasets on biomedical relation extraction
-*   **[`Question  Answering`](https://drive.google.com/open?id=1R2aTOdvGlce95OVQLXnJ_pdm3i6UmVOw)**: (1.10 MB), 2 datasets on biomedical question answering task.
+*   **[`Question Answering`](https://drive.google.com/open?id=19ft5q44W4SuptJgTwR84xZjsHg1jvjSZ)**: (5.23 MB), 3 datasets on biomedical question answering task.
 
 For details on NER datasets, please see **A Neural Network Multi-Task Learning Approach to Biomedical Named Entity Recognition (Crichton et al. 2017)**.
 The source of pre-processed datasets are from https://github.com/cambridgeltl/MTL-Bioinformatics-2016 and https://github.com/spyysalo/s800.
@@ -118,7 +118,7 @@ precision   : 75.87%
 Please be aware that you have to move `output_dir` to make new model. As some RE datasets are 10-fold divided, you have to make different output directories to train a model with different datasets.
 
 ### Question Answering (QA)
-To download QA datasets, you should register in [BioASQ website](http://participants-area.bioasq.org). After the registration, download **[`BioASQ Task B`](http://participants-area.bioasq.org/Tasks/A/getData/)** data, and unpack it to some directory `$BIOASQ_DIR`. Finally, download **[`Question Answering`](https://drive.google.com/open?id=1R2aTOdvGlce95OVQLXnJ_pdm3i6UmVOw)**, our pre-processed version of BioASQ-4/5b datasets, and unpack it to `$BIOASQ_DIR`.
+To download QA datasets, you should register in [BioASQ website](http://participants-area.bioasq.org). After the registration, download **[`BioASQ Task B`](http://participants-area.bioasq.org/Tasks/A/getData/)** data, and unpack it to some directory `$BIOASQ_DIR`. Finally, download **[`Question Answering`](https://drive.google.com/open?id=19ft5q44W4SuptJgTwR84xZjsHg1jvjSZ)**, our pre-processed version of BioASQ-4/5/6b datasets, and unpack it to `$BIOASQ_DIR`.
 
 Please use `BioASQ-*.json` for training and testing the model. This is necessary as the input data format of BioBERT is different from BioASQ dataset format. Also, please be informed that the do_lower_case flag should be set as `--do_lower_case=False`. Following command runs fine-tuining code on QA with default arguments.
 ```
