@@ -130,9 +130,9 @@ python run_qa.py \
      --init_checkpoint=$BIOBERT_DIR/biobert_model.ckpt \
      --max_seq_length=384 \
      --train_batch_size=12 \
-     --learning_rate=3e-5 \
+     --learning_rate=5e-6 \
      --doc_stride=128 \
-     --num_train_epochs=50.0 \
+     --num_train_epochs=5.0 \
      --do_lower_case=False \
      --train_file=$BIOASQ_DIR/BioASQ-train-4b.json \
      --predict_file=$BIOASQ_DIR/BioASQ-test-4b-1.json \
