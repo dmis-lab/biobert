@@ -2,7 +2,8 @@
 This repository provides fine-tuning codes of BioBERT, a language representation model for biomedical domain, especially designed for biomedical text mining tasks such as biomedical named entity recognition, relation extraction, question answering, etc. Please refer to our paper [BioBERT: a pre-trained biomedical language representation model for biomedical text mining](http://arxiv.org/abs/1901.08746) for more details.
 
 ## Updates
-*   **(5 Apr 2019)** A new version of BioBERT (v1.1) will be available, soon. Please specify the version of BioBERT (currently [v1.0](https://github.com/naver/biobert-pretrained/releases) is only available) when using BioBERT.
+*   **(16 May 2019)** A new version of BioBERT ([v1.1](https://github.com/naver/biobert-pretrained/releases)) is now available, which obtains slightly better performance than BioBERT v1.0.
+*   **(16 May 2019)** Updated code and dataset for BioASQ ([7ed3d7a](https://github.com/dmis-lab/biobert/commit/7ed3d7a83823c95ed35c59f82ea2669f04e0e5d7)).
 *   **(3 Feb 2019)** Updated our [arxiv paper](http://arxiv.org/abs/1901.08746).
 
 ## Installation
