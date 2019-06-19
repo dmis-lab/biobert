@@ -22,14 +22,9 @@ The source of pre-processed datasets are from https://github.com/cambridgeltl/MT
 
 For details on QA datasets, please see **An overview of the BIOASQ large-scale biomedical semantic indexing and question answering competition (Tsatsaronis et al. 2015)**.
 
-Due to the copyright issue of some datasets, we provide links of those datasets instead:
-### NER
+Due to the copyright issue, we provide links of some datasets as follows:
 *   **[`2010 i2b2/VA`](https://www.i2b2.org/NLP/DataSets/Main.php)**
-
-### RE
 *   **[`ChemProt`](http://www.biocreative.org/)**
-
-### QA
 *   **[`BioASQ Task B`](http://participants-area.bioasq.org/Tasks/A/getData/)**
 
 ## Fine-tuning BioBERT
