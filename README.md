@@ -7,7 +7,7 @@ This repository provides fine-tuning codes of BioBERT, a language representation
 *   **(15 May 2019)** Updated code and dataset for BioASQ [`7ed3d7a`](https://github.com/dmis-lab/biobert/commit/7ed3d7a83823c95ed35c59f82ea2669f04e0e5d7).
 
 ## Installation
-To use BioBERT, we need pre-trained weights of BioBERT, which you can download from [Naver GitHub repository for BioBERT pre-trained weights](https://github.com/naver/biobert-pretrained). Make sure to specify the versions of pre-trained weights used in your works. Also, note that this repository is based on the [BERT repository](https://github.com/google-research/bert) by Google.
+To use BioBERT, we need pre-trained weights of BioBERT, which you can download from [NAVER GitHub repository for BioBERT pre-trained weights](https://github.com/naver/biobert-pretrained). Make sure to specify the versions of pre-trained weights used in your works. Also, note that this repository is based on the [BERT repository](https://github.com/google-research/bert) by Google.
 
 All the fine-tuning experiments were conducted on a single TITAN Xp GPU machine which has 12GB of RAM. The code was tested with Python2 and Python3 (We used Python2 for experiments). You might want to install `java` to use official evaluation script of BioASQ. See `requirements.txt` for other details.
 
@@ -28,7 +28,7 @@ Due to the copyright issue, we provide links of some datasets as follows:
 *   **[`BioASQ Task B`](http://participants-area.bioasq.org/Tasks/A/getData/)**
 
 ## Fine-tuning BioBERT
-After downloading one of the pre-trained models from [Naver GitHub repository for BioBERT pre-trained weights](https://github.com/naver/biobert-pretrained), unpack it to any directory you want, which we will denote as `$BIOBERT_DIR`. 
+After downloading one of the pre-trained models from [NAVER GitHub repository for BioBERT pre-trained weights](https://github.com/naver/biobert-pretrained), unpack it to any directory you want, which we will denote as `$BIOBERT_DIR`. 
 
 ### Named Entity Recognition (NER)
 Download and unpack the NER datasets provided above (**[`Named Entity Recognition`](https://drive.google.com/open?id=1OletxmPYNkz2ltOr9pyT0b0iBtUWxslh)**). From now on, `$NER_DIR` indicates a folder for a single dataset which should include `train_dev.tsv`, `train.tsv`, `devel.tsv` and `test.tsv`. For example, `export NER_DIR=~/bioBERT/biodatasets/NERdata/NCBI-disease`. Following command runs fine-tuining code on NER with default arguments.
