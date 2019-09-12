@@ -165,9 +165,6 @@ Note that we pre-trained our model on SQuAD dataset to get the state-of-the-art 
 Please see LICENSE file for details. Downloading data indicates your acceptance of our disclaimer.
 
 ## Citation
-
-For now, cite [the Arxiv paper](http://arxiv.org/abs/1901.08746):
-
 ```
 @article{10.1093/bioinformatics/btz682,
     author = {Lee, Jinhyuk and Yoon, Wonjin and Kim, Sungdong and Kim, Donghyeon and Kim, Sunkyu and So, Chan Ho and Kang, Jaewoo},
