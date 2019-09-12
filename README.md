@@ -2,6 +2,7 @@
 This repository provides fine-tuning codes of BioBERT, a language representation model for biomedical domain, especially designed for biomedical text mining tasks such as biomedical named entity recognition, relation extraction, question answering, etc. Please refer to our paper [BioBERT: a pre-trained biomedical language representation model for biomedical text mining](http://arxiv.org/abs/1901.08746) for more details.
 
 ## Updates
+*   **(12 Sep 2019)** Our paper has been accepted to Bioinformatics ([link](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/btz682/5566506)). Please update your [BibTex](https://github.com/dmis-lab/biobert#citation).
 *   **(19 June 2019)** Check out our BioBERT based multi-type NER and normalization model ([BERN](https://bern.korea.ac.kr/)) with its [paper](https://ieeexplore.ieee.org/document/8730332)!
 *   **(16 May 2019)** A new version of BioBERT ([v1.1](https://github.com/naver/biobert-pretrained/releases)) is now available.
 *   **(15 May 2019)** Updated code and dataset for BioASQ [`7ed3d7a`](https://github.com/dmis-lab/biobert/commit/7ed3d7a83823c95ed35c59f82ea2669f04e0e5d7).
@@ -168,11 +169,15 @@ Please see LICENSE file for details. Downloading data indicates your acceptance 
 For now, cite [the Arxiv paper](http://arxiv.org/abs/1901.08746):
 
 ```
-@article{lee2019biobert,
-  title={BioBERT: a pre-trained biomedical language representation model for biomedical text mining},
-  author={Lee, Jinhyuk and Yoon, Wonjin and Kim, Sungdong and Kim, Donghyeon and Kim, Sunkyu and So, Chan Ho and Kang, Jaewoo},
-  journal={arXiv preprint arXiv:1901.08746},
-  year={2019}
+@article{10.1093/bioinformatics/btz682,
+    author = {Lee, Jinhyuk and Yoon, Wonjin and Kim, Sungdong and Kim, Donghyeon and Kim, Sunkyu and So, Chan Ho and Kang, Jaewoo},
+    title = "{BioBERT: a pre-trained biomedical language representation model for biomedical text mining}",
+    journal = {Bioinformatics},
+    year = {2019},
+    month = {09},
+    issn = {1367-4803},
+    doi = {10.1093/bioinformatics/btz682},
+    url = {https://doi.org/10.1093/bioinformatics/btz682},
 }
 ```
 
