@@ -178,8 +178,6 @@ Please see LICENSE file for details. Downloading data indicates your acceptance 
 }
 ```
 
-If we submit the paper to a conference or journal, we will update the BibTeX.
-
 ## Contact information
 
 For help or issues using BioBERT, please submit a GitHub issue. Please contact Jinhyuk Lee
