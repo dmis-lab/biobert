@@ -1,6 +1,6 @@
 # BioBERT
-This repository provides fine-tuning codes of BioBERT, a language representation model for biomedical domain, especially designed for biomedical text mining tasks such as biomedical named entity recognition, relation extraction, question answering, etc. Please refer to our paper [BioBERT: a pre-trained biomedical language representation model for biomedical text mining](http://doi.org/10.1093/bioinformatics/btz682) for more details. This project is done by [DMIS-Lab](https://dmis.korea.ac.kr).
 ![overview](figs/biobert_overview.png)
+This repository provides fine-tuning codes of BioBERT, a language representation model for biomedical domain, especially designed for biomedical text mining tasks such as biomedical named entity recognition, relation extraction, question answering, etc. Please refer to our paper [BioBERT: a pre-trained biomedical language representation model for biomedical text mining](http://doi.org/10.1093/bioinformatics/btz682) for more details. This project is done by [DMIS-Lab](https://dmis.korea.ac.kr).
 
 ## Updates
 *   **(12 Sep 2019)** Our paper has been accepted to Bioinformatics ([link](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/btz682/5566506)). Please update your [BibTex](https://github.com/dmis-lab/biobert#citation).
