@@ -6,7 +6,6 @@ This repository provides fine-tuning codes of BioBERT, a language representation
 *   **(12 Sep 2019)** Our paper has been accepted to Bioinformatics ([link](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/btz682/5566506)). Please update your [BibTex](https://github.com/dmis-lab/biobert#citation).
 *   **(19 June 2019)** Check out our BioBERT based multi-type NER and normalization model ([BERN](https://bern.korea.ac.kr/)) with its [paper](https://ieeexplore.ieee.org/document/8730332)!
 *   **(16 May 2019)** A new version of BioBERT ([v1.1](https://github.com/naver/biobert-pretrained/releases)) is now available.
-*   **(15 May 2019)** Updated code and dataset for BioASQ [`7ed3d7a`](https://github.com/dmis-lab/biobert/commit/7ed3d7a83823c95ed35c59f82ea2669f04e0e5d7).
 
 ## Installation
 To use BioBERT, we need pre-trained weights of BioBERT, which you can download from [NAVER GitHub repository for BioBERT pre-trained weights](https://github.com/naver/biobert-pretrained). Make sure to specify the versions of pre-trained weights used in your works. Also, note that this repository is based on the [BERT repository](https://github.com/google-research/bert) by Google.
