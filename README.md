@@ -3,6 +3,7 @@
 This repository provides fine-tuning codes of BioBERT, a language representation model for biomedical domain, especially designed for biomedical text mining tasks such as biomedical named entity recognition, relation extraction, question answering, etc. Please refer to our paper [BioBERT: a pre-trained biomedical language representation model for biomedical text mining](http://doi.org/10.1093/bioinformatics/btz682) for more details. This project is done by [DMIS-Lab](https://dmis.korea.ac.kr).
 
 ## Updates
+*   **(30 Oct 2019)** We released the code and the pre-trained models for BioASQ ([link](https://github.com/dmis-lab/bioasq-biobert)) used in the seventh BioASQ challenge (7b-phase B).
 *   **(12 Sep 2019)** Our paper has been accepted to Bioinformatics ([link](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/btz682/5566506)). Please update your [BibTex](https://github.com/dmis-lab/biobert#citation).
 *   **(19 June 2019)** Check out our BioBERT based multi-type NER and normalization model ([BERN](https://bern.korea.ac.kr/)) with its [paper](https://ieeexplore.ieee.org/document/8730332)!
 *   **(16 May 2019)** A new version of BioBERT ([v1.1](https://github.com/naver/biobert-pretrained/releases)) is now available.
@@ -154,6 +155,8 @@ As our model is only on factoid questions, the result will be like
 ```
 where the second, third and fourth numbers will be SAcc, LAcc and MRR of factoid questions respectively.
 Note that we pre-trained our model on SQuAD dataset to get the state-of-the-art performance. Please check our paper for details.
+
+For list and yes/no type questions, please refer to our [BioBERT at BioASQ repository](https://github.com/dmis-lab/bioasq-biobert).
 
 ## FAQ
 *   [How can I use BioBERT with PyTorch?](https://github.com/dmis-lab/biobert/issues/2)
