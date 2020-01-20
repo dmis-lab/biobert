@@ -26,17 +26,16 @@ Link | Detail
 *   [What vocabulary does BioBERT use?](https://github.com/naver/biobert-pretrained/issues/1)
 
 ## Datasets
-We provide pre-processed version of benchmark datasets for each task as follows:
+We provide a pre-processed version of benchmark datasets for each task as follows:
 *   **[`Named Entity Recognition`](https://drive.google.com/open?id=1OletxmPYNkz2ltOr9pyT0b0iBtUWxslh)**: (17.3 MB), 8 datasets on biomedical named entity recognition
 *   **[`Relation Extraction`](https://drive.google.com/open?id=1-jDKGcXREb2X9xTFnuiJ36PvsqoyHWcw)**: (2.5 MB), 2 datasets on biomedical relation extraction
 *   **[`Question Answering`](https://drive.google.com/open?id=19ft5q44W4SuptJgTwR84xZjsHg1jvjSZ)**: (5.23 MB), 3 datasets on biomedical question answering task.
 
-For details on NER datasets, please see **A Neural Network Multi-Task Learning Approach to Biomedical Named Entity Recognition (Crichton et al. 2017)**.
-The source of pre-processed datasets are from https://github.com/cambridgeltl/MTL-Bioinformatics-2016 and https://github.com/spyysalo/s800.
-
-For details on QA datasets, please see **An overview of the BIOASQ large-scale biomedical semantic indexing and question answering competition (Tsatsaronis et al. 2015)** with [the original dataset](http://participants-area.bioasq.org/Tasks/A/getData/).
-
-Due to the copyright issue, we provide links of some datasets as follows:
+You can simply run `download.sh` to download all datasets at once.
+```bash
+$ ./download.sh
+```
+This will download all datasets under the folder `datasets`. Due to the copyright issue, we provide links of some datasets as follows:
 *   **[`2010 i2b2/VA`](https://www.i2b2.org/NLP/DataSets/Main.php)**, **[`ChemProt`](http://www.biocreative.org/)**
 
 ## Fine-tuning BioBERT
