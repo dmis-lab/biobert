@@ -13,9 +13,9 @@ Note that this repository is based on the [BERT repository](https://github.com/g
 
 ## Quick Links
 Link | Detail
----------- | ----------
+------------- | -------------
 [Pre-trained Weights](https://github.com/naver/biobert-pretrained) | Repository for pre-trained weights of BioBERT
-[BERN](https://bern.korea.ac.kr) | Web-based biomedical NER + Normalization tool using BioBERT (provides Web interface and API)
+[BERN](https://bern.korea.ac.kr) | Web-based biomedical NER + normalization using BioBERT
 [7th BioASQ](https://github.com/dmis-lab/bioasq-biobert) | Code for the seventh BioASQ challenge winning model (factoid/yesno/list)
 [Paper](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/btz682/5566506) | Paper link with [BibTeX](https://github.com/dmis-lab/biobert#citation) (Bioinformatics)
 
