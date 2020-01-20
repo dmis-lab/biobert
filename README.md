@@ -40,13 +40,13 @@ Due to the copyright issue, we provide links of some datasets as follows:
 *   **[`2010 i2b2/VA`](https://www.i2b2.org/NLP/DataSets/Main.php)**, **[`ChemProt`](http://www.biocreative.org/)**
 
 ## Fine-tuning BioBERT
-After downloading one of the pre-trained models from [NAVER GitHub repository for BioBERT pre-trained weights](https://github.com/naver/biobert-pretrained), unpack it to any directory you want, which we will denote as `$BIOBERT_DIR`. 
+After downloading one of the pre-trained weights, unpack it to any directory you want, which we will denote as `$BIOBERT_DIR`. 
 
 ### Named Entity Recognition (NER)
-Download and unpack the NER datasets provided above (**[`Named Entity Recognition`](https://drive.google.com/open?id=1OletxmPYNkz2ltOr9pyT0b0iBtUWxslh)**). From now on, `$NER_DIR` indicates a folder for a single dataset which should include `train_dev.tsv`, `train.tsv`, `devel.tsv` and `test.tsv`. For example, `export NER_DIR=~/bioBERT/biodatasets/NERdata/NCBI-disease`. Following command runs fine-tuining code on NER with default arguments.
+Download and unpack the NER datasets provided above. `$NER_DIR` indicates a folder for a single dataset which should include `train_dev.tsv`, `train.tsv`, `devel.tsv` and `test.tsv`. For example, `export NER_DIR=~/bioBERT/biodatasets/NERdata/NCBI-disease`. Following command runs fine-tuining code on NER with default arguments.
 ```
-mkdir /tmp/bioner/
-python run_ner.py \
+$ mkdir /tmp/bioner/
+$ python run_ner.py \
     --do_train=true \
     --do_eval=true \
     --vocab_file=$BIOBERT_DIR/vocab.txt \
@@ -72,7 +72,7 @@ Note that this result is the token-level evaluation measure while the official e
 The results of `python run_ner.py` will be recorded as two files: `token_test.txt` and `label_test.txt` in `output_dir`. 
 Use `ner_detokenize.py` in `./biocodes/` to obtain word level prediction file.
 ```
-python biocodes/ner_detokenize.py \
+$ python biocodes/ner_detokenize.py \
 --token_test_path=/tmp/bioner/token_test.txt \
 --label_test_path=/tmp/bioner/label_test.txt \
 --answer_path=$NER_DIR/test.tsv \
@@ -81,7 +81,7 @@ python biocodes/ner_detokenize.py \
 This will generate `NER_result_conll.txt` in `output_dir`.
 Use `conlleval.pl` in `./biocodes/` for entity-level exact match evaluation results.
 ```
-perl biocodes/conlleval.pl < /tmp/bioner/NER_result_conll.txt
+$ perl biocodes/conlleval.pl < /tmp/bioner/NER_result_conll.txt
 ```
 
 The entity-level results for NCBI-disease dataset will be like :
@@ -93,9 +93,9 @@ accuracy:  98.57%; precision:  87.21%; recall:  90.21%; FB1:  88.68
 Note that this is a sample run of an NER model. Performance of NER models usually converges at more than 50 epochs (learning rate = 1e-5 is recommended).
 
 ### Relation Extraction (RE)
-Download and unpack the RE datasets provided above (**[`Relation Extraction`](https://drive.google.com/open?id=1-jDKGcXREb2X9xTFnuiJ36PvsqoyHWcw)**). From now on, `$RE_DIR` indicates a folder for a single dataset. `{TASKNAME}` means the name of task such as gad or euadr. For example, `export RE_DIR=~/bioBERT/biodatasets/REdata/GAD/1` and `--task_name=gad`. Following command runs fine-tuining code on RE with default arguments.
+Download and unpack the RE datasets provided above. `$RE_DIR` indicates a folder for a single dataset. `{TASKNAME}` means the name of task such as gad or euadr. For example, `export RE_DIR=~/bioBERT/biodatasets/REdata/GAD/1` and `--task_name=gad`. Following command runs fine-tuining code on RE with default arguments.
 ```
-python run_re.py \
+$ python run_re.py \
     --task_name={TASKNAME} \
     --do_train=true \
     --do_eval=true \
@@ -113,7 +113,7 @@ python run_re.py \
 ```
 The predictions will be saved into a file called `test_results.tsv` in the `output_dir`. Once you have trained your model, you can use it in inference mode by using `--do_train=false --do_predict=true` for evaluating test.tsv. Use `./biocodes/re_eval.py` in `./biocodes/` folder for evaluation. Also, note that CHEMPROT dataset is a multi-class classification dataset. To evaluate CHEMPROT result, run `re_eval.py` with additional `--task=chemprot` flag.
 ```
-python ./biocodes/re_eval.py --output_path={output_dir}/test_results.tsv --answer_path=$RE_DIR/test.tsv
+$ python ./biocodes/re_eval.py --output_path={output_dir}/test_results.tsv --answer_path=$RE_DIR/test.tsv
 ```
 The result for GAD dataset will be like this:
 ```
@@ -126,11 +126,11 @@ precision   : 75.87%
 Please be aware that you have to move `output_dir` to make new model. As some RE datasets are 10-fold divided, you have to make different output directories to train a model with different datasets.
 
 ### Question Answering (QA)
-To download QA datasets, you should register in [BioASQ website](http://participants-area.bioasq.org). After the registration, download **[`BioASQ Task B`](http://participants-area.bioasq.org/Tasks/A/getData/)** data, and unpack it to some directory `$BIOASQ_DIR`. Finally, download **[`Question Answering`](https://drive.google.com/open?id=19ft5q44W4SuptJgTwR84xZjsHg1jvjSZ)**, our pre-processed version of BioASQ-4/5/6b datasets, and unpack it to `$BIOASQ_DIR`.
+To download the original QA datasets, you should register in [BioASQ website](http://participants-area.bioasq.org). After the registration, download data from **[`BioASQ Task B`](http://participants-area.bioasq.org/Tasks/A/getData/)**, and unpack it to a directory `$BIOASQ_DIR`. Additionally, download our pre-processed version of BioASQ-4/5/6b datasets (**[`Question Answering`](https://drive.google.com/open?id=19ft5q44W4SuptJgTwR84xZjsHg1jvjSZ)**) and also unpack it to `$BIOASQ_DIR`.
 
 Please use `BioASQ-*.json` for training and testing the model. This is necessary as the input data format of BioBERT is different from BioASQ dataset format. Also, please be informed that the do_lower_case flag should be set as `--do_lower_case=False`. Following command runs fine-tuining code on QA with default arguments.
 ```
-python run_qa.py \
+$ python run_qa.py \
      --do_train=True \
      --do_predict=True \
      --vocab_file=$BIOBERT_DIR/vocab.txt \
@@ -149,13 +149,13 @@ python run_qa.py \
 The predictions will be saved into a file called `predictions.json` and `nbest_predictions.json` in the `output_dir`.
 Run `transform_nbset2bioasqform.py` in `./biocodes/` folder to convert `nbest_predictions.json` to BioASQ JSON format, which will be used for the official evaluation.
 ```
-python ./biocodes/transform_nbset2bioasqform.py --nbest_path={QA_output_dir}/nbest_predictions.json --output_path={output_dir}
+$ python ./biocodes/transform_nbset2bioasqform.py --nbest_path={QA_output_dir}/nbest_predictions.json --output_path={output_dir}
 ```
 This will generate `BioASQform_BioASQ-answer.json` in `{output_dir}`.
 Clone **[`evaluation code`](https://github.com/BioASQ/Evaluation-Measures)** from BioASQ github and run evaluation code on `Evaluation-Measures` directory. Please note that you should always put 5 as parameter for -e.
 ```
-cd Evaluation-Measures
-java -Xmx10G -cp $CLASSPATH:./flat/BioASQEvaluation/dist/BioASQEvaluation.jar evaluation.EvaluatorTask1b -phaseB -e 5 \
+$ cd Evaluation-Measures
+$ java -Xmx10G -cp $CLASSPATH:./flat/BioASQEvaluation/dist/BioASQEvaluation.jar evaluation.EvaluatorTask1b -phaseB -e 5 \
     $BIOASQ_DIR/4B1_golden.json \
     RESULTS_PATH/BioASQform_BioASQ-answer.json
 ```
