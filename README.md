@@ -90,7 +90,7 @@ Note that this is a sample run of an NER model. Performance of NER models usuall
 ### Relation Extraction (RE)
 Let `$RE_DIR` indicate a folder for a single RE dataset, `$TASK_NAME` denote the name of task (two possible options: {gad, euadr}), and `$OUTPUT_DIR` denote a directory for RE outputs:
 ```bash
-$ export RE_DIR=./datasets/RE/GAD/1`
+$ export RE_DIR=./datasets/RE/GAD/1
 $ export TASK_NAME=gad
 $ export OUTPUT_DIR=./re_outputs
 ```
