@@ -1,17 +1,29 @@
 # BioBERT
-![overview](figs/biobert_overview.png)
-This repository provides fine-tuning codes of BioBERT, a language representation model for biomedical domain, especially designed for biomedical text mining tasks such as biomedical named entity recognition, relation extraction, question answering, etc. Please refer to our paper [BioBERT: a pre-trained biomedical language representation model for biomedical text mining](http://doi.org/10.1093/bioinformatics/btz682) for more details. This project is done by [DMIS-Lab](https://dmis.korea.ac.kr).
-
-## Updates
-*   **(30 Oct 2019)** We released the code and the pre-trained models for BioASQ ([link](https://github.com/dmis-lab/bioasq-biobert)) used in the seventh BioASQ challenge (7b-phase B).
-*   **(12 Sep 2019)** Our paper has been accepted to Bioinformatics ([link](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/btz682/5566506)). Please update your [BibTex](https://github.com/dmis-lab/biobert#citation).
-*   **(19 June 2019)** Check out our BioBERT based multi-type NER and normalization model ([BERN](https://bern.korea.ac.kr/)) with its [paper](https://ieeexplore.ieee.org/document/8730332)!
-*   **(16 May 2019)** A new version of BioBERT ([v1.1](https://github.com/naver/biobert-pretrained/releases)) is now available.
+This repository provides fine-tuning codes of BioBERT, a biomedical language representation model designed for biomedical text mining tasks such as biomedical named entity recognition, relation extraction, question answering, etc. Please refer to our paper [BioBERT: a pre-trained biomedical language representation model for biomedical text mining](http://doi.org/10.1093/bioinformatics/btz682) for more details. This project is done by [DMIS-Lab](https://dmis.korea.ac.kr).
 
 ## Installation
-To use BioBERT, we need pre-trained weights of BioBERT, which you can download from [NAVER GitHub repository for BioBERT pre-trained weights](https://github.com/naver/biobert-pretrained). Make sure to specify the versions of pre-trained weights used in your works. Also, note that this repository is based on the [BERT repository](https://github.com/google-research/bert) by Google.
+Sections below describe the installation and the fine-tuning process of BioBERT based on Tensorflow. If you are not familiar with coding and just want to recognize biomedical entities in your text using BioBERT, please use [this tool](https://bern.korea.ac.kr) which uses BioBERT for multi-type NER and normalization.
 
-All the fine-tuning experiments were conducted on a single TITAN Xp GPU machine which has 12GB of RAM. The code was tested with Python2 and Python3 (We used Python2 for experiments). You might want to install `java` to use official evaluation script of BioASQ. See `requirements.txt` for other details.
+To fine-tune BioBERT, you need to download [pre-trained weights of BioBERT](https://github.com/naver/biobert-pretrained). After downloading the pre-trained weights, use `requirements.txt` to install BioBERT as follows:
+```bash
+$ git clone https://github.com/dmis-lab/biobert.git
+$ cd biobert; pip install -r requirements.txt
+```
+Note that this repository is based on the [BERT repository](https://github.com/google-research/bert) by Google. All the fine-tuning experiments were conducted on a single TITAN Xp GPU machine which has 12GB of RAM. You might want to install `java` to use official evaluation script of BioASQ. See `requirements.txt` for other details.
+
+## Quick Links
+Link | Detail
+---------- | ----------
+[Pre-trained Weights](https://github.com/naver/biobert-pretrained) | Repository for pre-trained weights of BioBERT
+[BERN](https://bern.korea.ac.kr) | Web-based biomedical NER + Normalization tool using BioBERT (provides Web interface and API)
+[7th BioASQ](https://github.com/dmis-lab/bioasq-biobert) | Code for the seventh BioASQ challenge winning model (factoid/yesno/list)
+[Paper](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/btz682/5566506) | Paper link with [BibTeX](https://github.com/dmis-lab/biobert#citation) (Bioinformatics)
+
+## FAQs
+*   [How can I use BioBERT with PyTorch?](https://github.com/dmis-lab/biobert/issues/2)
+*   [Can I get word/sentence embeddings using BioBERT?](https://github.com/dmis-lab/biobert/issues/23)
+*   [How can I pre-train QA models on SQuAD?](https://github.com/dmis-lab/biobert/issues/10)
+*   [What vocabulary does BioBERT use?](https://github.com/naver/biobert-pretrained/issues/1)
 
 ## Datasets
 We provide pre-processed version of benchmark datasets for each task as follows:
@@ -22,12 +34,10 @@ We provide pre-processed version of benchmark datasets for each task as follows:
 For details on NER datasets, please see **A Neural Network Multi-Task Learning Approach to Biomedical Named Entity Recognition (Crichton et al. 2017)**.
 The source of pre-processed datasets are from https://github.com/cambridgeltl/MTL-Bioinformatics-2016 and https://github.com/spyysalo/s800.
 
-For details on QA datasets, please see **An overview of the BIOASQ large-scale biomedical semantic indexing and question answering competition (Tsatsaronis et al. 2015)**.
+For details on QA datasets, please see **An overview of the BIOASQ large-scale biomedical semantic indexing and question answering competition (Tsatsaronis et al. 2015)** with [the original dataset](http://participants-area.bioasq.org/Tasks/A/getData/).
 
 Due to the copyright issue, we provide links of some datasets as follows:
-*   **[`2010 i2b2/VA`](https://www.i2b2.org/NLP/DataSets/Main.php)**
-*   **[`ChemProt`](http://www.biocreative.org/)**
-*   **[`BioASQ Task B`](http://participants-area.bioasq.org/Tasks/A/getData/)**
+*   **[`2010 i2b2/VA`](https://www.i2b2.org/NLP/DataSets/Main.php)**, **[`ChemProt`](http://www.biocreative.org/)**
 
 ## Fine-tuning BioBERT
 After downloading one of the pre-trained models from [NAVER GitHub repository for BioBERT pre-trained weights](https://github.com/naver/biobert-pretrained), unpack it to any directory you want, which we will denote as `$BIOBERT_DIR`. 
@@ -157,12 +167,6 @@ where the second, third and fourth numbers will be SAcc, LAcc and MRR of factoid
 Note that we pre-trained our model on SQuAD dataset to get the state-of-the-art performance. Please check our paper for details.
 
 For list and yes/no type questions, please refer to our [BioBERT at BioASQ repository](https://github.com/dmis-lab/bioasq-biobert).
-
-## FAQ
-*   [How can I use BioBERT with PyTorch?](https://github.com/dmis-lab/biobert/issues/2)
-*   [Can I get word/sentence embeddings using BioBERT?](https://github.com/dmis-lab/biobert/issues/23)
-*   [How can I pre-train QA models on SQuAD?](https://github.com/dmis-lab/biobert/issues/10)
-*   [What vocabulary does BioBERT use?](https://github.com/naver/biobert-pretrained/issues/1)
 
 ## License and Disclaimer
 Please see LICENSE file for details. Downloading data indicates your acceptance of our disclaimer.
