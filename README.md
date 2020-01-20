@@ -110,7 +110,7 @@ specificity : 67.19%
 f1 score    : 83.52%
 precision   : 75.87%
 ```
-Please be aware that you have to move `$OUTPUT_DIR` to make new model. As some RE datasets are 10-fold divided, you have to make different output directories to train a model with different datasets (e.g., `$ export OUTPUT_DIR=./re_outputs_2`).
+Please be aware that you have to move `$OUTPUT_DIR` to make new model. As some RE datasets are 10-fold divided, you have to make different output directories to train/test a model with a different fold (e.g., `$ export OUTPUT_DIR=./re_outputs_2`).
 
 ### Question Answering (QA)
 For BioASQ, you need the original datasets from the official BioASQ website. Please register in [BioASQ website](http://participants-area.bioasq.org) and download the BioASQ data from **[`BioASQ Task B`](http://participants-area.bioasq.org/Tasks/A/getData/)**. In addition to the pre-processed data provided above, unpack it to a directory `$QA_DIR`. For example, with `$OUTPUT_DIR` for QA outputs, set as:
