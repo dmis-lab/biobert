@@ -46,18 +46,14 @@ $ echo $BIOBERT_DIR
 ```
 
 ### Named Entity Recognition (NER)
-Download and unpack the NER datasets provided above. `$NER_DIR` indicates a folder for a single dataset which should include `train_dev.tsv`, `train.tsv`, `devel.tsv` and `test.tsv`. For example, `export NER_DIR=~/bioBERT/biodatasets/NERdata/NCBI-disease`. Following command runs fine-tuining code on NER with default arguments.
+First, set `$NER_DIR` to indicate a folder for a single NER dataset which contains `train_dev.tsv`, `train.tsv`, `devel.tsv` and `test.tsv`. For example, when fine-tuning on the NCBI disease corpus,
+```bash
+export NER_DIR=./datasets/NER/NCBI-disease
+```
+Following command runs fine-tuining code on NER with default arguments.
 ```
 $ mkdir /tmp/bioner/
-$ python run_ner.py \
-    --do_train=true \
-    --do_eval=true \
-    --vocab_file=$BIOBERT_DIR/vocab.txt \
-    --bert_config_file=$BIOBERT_DIR/bert_config.json \
-    --init_checkpoint=$BIOBERT_DIR/biobert_model.ckpt \
-    --num_train_epochs=10.0 \
-    --data_dir=$NER_DIR/ \
-    --output_dir=/tmp/bioner/
+$ python run_ner.py --do_train=true --do_eval=true --vocab_file=$BIOBERT_DIR/vocab.txt --bert_config_file=$BIOBERT_DIR/bert_config.json --init_checkpoint=$BIOBERT_DIR/model.ckpt-1000000 --num_train_epochs=10.0 --data_dir=$NER_DIR/ --output_dir=/tmp/bioner
 ```
 You can change the arguments as you want. Once you have trained your model, you can use it in inference mode by using `--do_train=false --do_predict=true` for evaluating `test.tsv`.
 The token-level evaluation result will be printed as stdout format. For example, the result for NCBI-disease dataset will be like this:
@@ -72,22 +68,17 @@ INFO:tensorflow:  loss = 25.894125
 (tips : You should go up a few lines to find the result. It comes before `INFO:tensorflow:**** Trainable Variables ****` )
 
 Note that this result is the token-level evaluation measure while the official evaluation should use the entity-level evaluation measure. 
-The results of `python run_ner.py` will be recorded as two files: `token_test.txt` and `label_test.txt` in `output_dir`. 
+The results of `python run_ner.py` will be recorded as two files: `token_test.txt` and `label_test.txt` in `--output_dir`. 
 Use `ner_detokenize.py` in `./biocodes/` to obtain word level prediction file.
 ```
-$ python biocodes/ner_detokenize.py \
---token_test_path=/tmp/bioner/token_test.txt \
---label_test_path=/tmp/bioner/label_test.txt \
---answer_path=$NER_DIR/test.tsv \
---output_dir=/tmp/bioner
+$ python biocodes/ner_detokenize.py --token_test_path=/tmp/bioner/token_test.txt --label_test_path=/tmp/bioner/label_test.txt --answer_path=$NER_DIR/test.tsv --output_dir=/tmp/bioner
 ```
-This will generate `NER_result_conll.txt` in `output_dir`.
-Use `conlleval.pl` in `./biocodes/` for entity-level exact match evaluation results.
+This will generate `NER_result_conll.txt` in `output_dir`. Use `conlleval.pl` in `./biocodes/` for entity-level exact match evaluation results.
 ```
 $ perl biocodes/conlleval.pl < /tmp/bioner/NER_result_conll.txt
 ```
 
-The entity-level results for NCBI-disease dataset will be like :
+The entity-level results for NCBI-disease dataset will be like:
 ```
 processed 24497 tokens with 960 phrases; found: 993 phrases; correct: 866.
 accuracy:  98.57%; precision:  87.21%; recall:  90.21%; FB1:  88.68
