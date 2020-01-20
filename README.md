@@ -133,9 +133,7 @@ This will generate `BioASQform_BioASQ-answer.json` in `$OUTPUT_DIR`.
 Clone **[`evaluation code`](https://github.com/BioASQ/Evaluation-Measures)** from BioASQ github and run evaluation code on `Evaluation-Measures` directory. Please note that you should always put 5 as parameter for -e.
 ```
 $ cd Evaluation-Measures
-$ java -Xmx10G -cp $CLASSPATH:./flat/BioASQEvaluation/dist/BioASQEvaluation.jar evaluation.EvaluatorTask1b -phaseB -e 5 \
-    $QA_DIR/4B1_golden.json \
-    $OUTPUT_DIR/BioASQform_BioASQ-answer.json
+$ java -Xmx10G -cp $CLASSPATH:./flat/BioASQEvaluation/dist/BioASQEvaluation.jar evaluation.EvaluatorTask1b -phaseB -e 5 $QA_DIR/4B1_golden.json $OUTPUT_DIR/BioASQform_BioASQ-answer.json
 ```
 As our model is only on factoid questions, the result will be like
 ```
