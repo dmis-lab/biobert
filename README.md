@@ -35,8 +35,7 @@ You can simply run `download.sh` to download all datasets at once.
 ```bash
 $ ./download.sh
 ```
-This will download all datasets under the folder `datasets`. Due to the copyright issue, we provide links of some datasets as follows:
-*   **[`2010 i2b2/VA`](https://www.i2b2.org/NLP/DataSets/Main.php)**, **[`ChemProt`](http://www.biocreative.org/)**
+This will download all datasets under the folder `datasets`. Due to the copyright issue, we provide links of some datasets as follows: **[`2010 i2b2/VA`](https://www.i2b2.org/NLP/DataSets/Main.php)**, **[`ChemProt`](http://www.biocreative.org/)**.
 
 ## Fine-tuning BioBERT
 After downloading one of the pre-trained weights, unpack it to any directory you want, which we will denote as `$BIOBERT_DIR`. 
