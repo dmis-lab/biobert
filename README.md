@@ -48,11 +48,11 @@ $ echo $BIOBERT_DIR
 ### Named Entity Recognition (NER)
 Let `$NER_DIR` indicate a folder for a single NER dataset which contains `train_dev.tsv`, `train.tsv`, `devel.tsv` and `test.tsv`. Also, set `$OUTPUT_DIR` as a directory for NER outputs (trained models, test predictions, etc). For example, when fine-tuning on the NCBI disease corpus,
 ```bash
-export NER_DIR=./datasets/NER/NCBI-disease
-export OUTPUT_DIR=./ner_outputs
+$ export NER_DIR=./datasets/NER/NCBI-disease
+$ export OUTPUT_DIR=./ner_outputs
 ```
 Following command runs fine-tuining code on NER with default arguments.
-```
+```bash
 $ mkdir -p $OUTPUT_DIR
 $ python run_ner.py --do_train=true --do_eval=true --vocab_file=$BIOBERT_DIR/vocab.txt --bert_config_file=$BIOBERT_DIR/bert_config.json --init_checkpoint=$BIOBERT_DIR/model.ckpt-1000000 --num_train_epochs=10.0 --data_dir=$NER_DIR --output_dir=$OUTPUT_DIR
 ```
@@ -88,27 +88,20 @@ accuracy:  98.57%; precision:  87.21%; recall:  90.21%; FB1:  88.68
 Note that this is a sample run of an NER model. Performance of NER models usually converges at more than 50 epochs (learning rate = 1e-5 is recommended).
 
 ### Relation Extraction (RE)
-Download and unpack the RE datasets provided above. `$RE_DIR` indicates a folder for a single dataset. `{TASKNAME}` means the name of task such as gad or euadr. For example, `export RE_DIR=~/bioBERT/biodatasets/REdata/GAD/1` and `--task_name=gad`. Following command runs fine-tuining code on RE with default arguments.
+Let `$RE_DIR` indicate a folder for a single RE dataset, `$TASK_NAME` denote the name of task (two possible options: {gad, euadr}), and `$OUTPUT_DIR` denote a directory for RE outputs:
+```bash
+$ export RE_DIR=./datasets/RE/GAD/1`
+$ export TASK_NAME=gad
+$ export OUTPUT_DIR=./re_outputs
+```
+Following command runs fine-tuining code on RE with default arguments.
 ```
 $ python run_re.py \
-    --task_name={TASKNAME} \
-    --do_train=true \
-    --do_eval=true \
-    --do_predict=true \
-    --vocab_file=$BIOBERT_DIR/vocab.txt \
-    --bert_config_file=$BIOBERT_DIR/bert_config.json \
-    --init_checkpoint=$BIOBERT_DIR/biobert_model.ckpt \
-    --max_seq_length=128 \
-    --train_batch_size=32 \
-    --learning_rate=2e-5 \
-    --num_train_epochs=3.0 \
-    --do_lower_case=false \
-    --data_dir=$RE_DIR/ \
-    --output_dir=/tmp/RE_output/ 
+    --task_name=$TASKNAME --do_train=true --do_eval=true --do_predict=true --vocab_file=$BIOBERT_DIR/vocab.txt --bert_config_file=$BIOBERT_DIR/bert_config.json --init_checkpoint=$BIOBERT_DIR/model-1000000.ckpt --max_seq_length=128 --train_batch_size=32 --learning_rate=2e-5 --num_train_epochs=3.0 --do_lower_case=false --data_dir=$RE_DIR --output_dir=$OUTPUT_DIR
 ```
-The predictions will be saved into a file called `test_results.tsv` in the `output_dir`. Once you have trained your model, you can use it in inference mode by using `--do_train=false --do_predict=true` for evaluating test.tsv. Use `./biocodes/re_eval.py` in `./biocodes/` folder for evaluation. Also, note that CHEMPROT dataset is a multi-class classification dataset. To evaluate CHEMPROT result, run `re_eval.py` with additional `--task=chemprot` flag.
+The predictions will be saved into a file called `test_results.tsv` in the `$OUTPUT_DIR`. Once you have trained your model, you can use it in inference mode by using `--do_train=false --do_predict=true` for evaluating test.tsv. Use `./biocodes/re_eval.py` in `./biocodes/` folder for evaluation. Also, note that CHEMPROT dataset is a multi-class classification dataset. To evaluate CHEMPROT result, run `re_eval.py` with additional `--task=chemprot` flag.
 ```
-$ python ./biocodes/re_eval.py --output_path={output_dir}/test_results.tsv --answer_path=$RE_DIR/test.tsv
+$ python ./biocodes/re_eval.py --output_path=$OUTPUT_DIR/test_results.tsv --answer_path=$RE_DIR/test.tsv
 ```
 The result for GAD dataset will be like this:
 ```
@@ -118,7 +111,7 @@ specificity : 67.19%
 f1 score    : 83.52%
 precision   : 75.87%
 ```
-Please be aware that you have to move `output_dir` to make new model. As some RE datasets are 10-fold divided, you have to make different output directories to train a model with different datasets.
+Please be aware that you have to move $OUTPUT_DIR to make new model. As some RE datasets are 10-fold divided, you have to make different output directories to train a model with different datasets.
 
 ### Question Answering (QA)
 To download the original QA datasets, you should register in [BioASQ website](http://participants-area.bioasq.org). After the registration, download data from **[`BioASQ Task B`](http://participants-area.bioasq.org/Tasks/A/getData/)**, and unpack it to a directory `$BIOASQ_DIR`. Additionally, download our pre-processed version of BioASQ-4/5/6b datasets (**[`Question Answering`](https://drive.google.com/open?id=19ft5q44W4SuptJgTwR84xZjsHg1jvjSZ)**) and also unpack it to `$BIOASQ_DIR`.
