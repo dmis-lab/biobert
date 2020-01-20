@@ -104,7 +104,6 @@ $ python ./biocodes/re_eval.py --output_path=$OUTPUT_DIR/test_results.tsv --answ
 ```
 The result for GAD dataset will be like this:
 ```
-.tsv
 recall      : 92.88%
 specificity : 67.19%
 f1 score    : 83.52%
