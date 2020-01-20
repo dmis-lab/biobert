@@ -92,13 +92,13 @@ Let `$RE_DIR` indicate a folder for a single RE dataset, `$TASK_NAME` denote the
 ```bash
 $ export RE_DIR=./datasets/RE/GAD/1
 $ export TASK_NAME=gad
-$ export OUTPUT_DIR=./re_outputs
+$ export OUTPUT_DIR=./re_outputs_1
 ```
 Following command runs fine-tuining code on RE with default arguments.
 ```
 $ python run_re.py --task_name=$TASK_NAME --do_train=true --do_eval=true --do_predict=true --vocab_file=$BIOBERT_DIR/vocab.txt --bert_config_file=$BIOBERT_DIR/bert_config.json --init_checkpoint=$BIOBERT_DIR/model.ckpt-1000000 --max_seq_length=128 --train_batch_size=32 --learning_rate=2e-5 --num_train_epochs=3.0 --do_lower_case=false --data_dir=$RE_DIR --output_dir=$OUTPUT_DIR
 ```
-The predictions will be saved into a file called `test_results.tsv` in the `$OUTPUT_DIR`. Once you have trained your model, you can use it in inference mode by using `--do_train=false --do_predict=true` for evaluating test.tsv. Use `./biocodes/re_eval.py` in `./biocodes/` folder for evaluation. Also, note that CHEMPROT dataset is a multi-class classification dataset. To evaluate CHEMPROT result, run `re_eval.py` with additional `--task=chemprot` flag.
+The predictions will be saved into a file called `test_results.tsv` in the `$OUTPUT_DIR`. Use `./biocodes/re_eval.py` in `./biocodes/` folder for evaluation. Note that the CHEMPROT dataset is a multi-class classification dataset and to evaluate the CHEMPROT result, you should run `re_eval.py` with additional `--task=chemprot` flag.
 ```
 $ python ./biocodes/re_eval.py --output_path=$OUTPUT_DIR/test_results.tsv --answer_path=$RE_DIR/test.tsv
 ```
@@ -110,35 +110,26 @@ specificity : 67.19%
 f1 score    : 83.52%
 precision   : 75.87%
 ```
-Please be aware that you have to move `$OUTPUT_DIR` to make new model. As some RE datasets are 10-fold divided, you have to make different output directories to train a model with different datasets.
+Please be aware that you have to move `$OUTPUT_DIR` to make new model. As some RE datasets are 10-fold divided, you have to make different output directories to train a model with different datasets (e.g., `$ export OUTPUT_DIR=./re_outputs_2`).
 
 ### Question Answering (QA)
-To download the original QA datasets, you should register in [BioASQ website](http://participants-area.bioasq.org). After the registration, download data from **[`BioASQ Task B`](http://participants-area.bioasq.org/Tasks/A/getData/)**, and unpack it to a directory `$BIOASQ_DIR`. Additionally, download our pre-processed version of BioASQ-4/5/6b datasets (**[`Question Answering`](https://drive.google.com/open?id=19ft5q44W4SuptJgTwR84xZjsHg1jvjSZ)**) and also unpack it to `$BIOASQ_DIR`.
+For BioASQ, you need the original datasets from the official BioASQ website. Please register in [BioASQ website](http://participants-area.bioasq.org) and download the BioASQ data from **[`BioASQ Task B`](http://participants-area.bioasq.org/Tasks/A/getData/)**. In addition to the pre-processed data provided above, unpack it to a directory `$QA_DIR`. For example, with `$OUTPUT_DIR` for QA outputs, set as:
 
-Please use `BioASQ-*.json` for training and testing the model. This is necessary as the input data format of BioBERT is different from BioASQ dataset format. Also, please be informed that the do_lower_case flag should be set as `--do_lower_case=False`. Following command runs fine-tuining code on QA with default arguments.
+```bash
+$ export QA_DIR=./datasets/QA
+$ export OUTPUT_DIR=./qa_outputs
 ```
-$ python run_qa.py \
-     --do_train=True \
-     --do_predict=True \
-     --vocab_file=$BIOBERT_DIR/vocab.txt \
-     --bert_config_file=$BIOBERT_DIR/bert_config.json \
-     --init_checkpoint=$BIOBERT_DIR/biobert_model.ckpt \
-     --max_seq_length=384 \
-     --train_batch_size=12 \
-     --learning_rate=5e-6 \
-     --doc_stride=128 \
-     --num_train_epochs=5.0 \
-     --do_lower_case=False \
-     --train_file=$BIOASQ_DIR/BioASQ-train-4b.json \
-     --predict_file=$BIOASQ_DIR/BioASQ-test-4b-1.json \
-     --output_dir=/tmp/QA_output/
+
+Please use `BioASQ-*.json` for training and testing the model which is the pre-processed format for BioBERT. Following command runs fine-tuining code on QA with default arguments.
 ```
-The predictions will be saved into a file called `predictions.json` and `nbest_predictions.json` in the `output_dir`.
+$ python run_qa.py --do_train=True --do_predict=True --vocab_file=$BIOBERT_DIR/vocab.txt --bert_config_file=$BIOBERT_DIR/bert_config.json --init_checkpoint=$BIOBERT_DIR/model.ckpt-1000000 --max_seq_length=384 --train_batch_size=12 --learning_rate=5e-6 --doc_stride=128 --num_train_epochs=5.0 --do_lower_case=False --train_file=$QA_DIR/BioASQ-train-4b.json --predict_file=$QA_DIR/BioASQ-test-4b-1.json --output_dir=$OUTPUT_DIR
+```
+The predictions will be saved into a file called `predictions.json` and `nbest_predictions.json` in the `$OUTPUT_DIR`.
 Run `transform_nbset2bioasqform.py` in `./biocodes/` folder to convert `nbest_predictions.json` to BioASQ JSON format, which will be used for the official evaluation.
 ```
-$ python ./biocodes/transform_nbset2bioasqform.py --nbest_path={QA_output_dir}/nbest_predictions.json --output_path={output_dir}
+$ python ./biocodes/transform_nbset2bioasqform.py --nbest_path=$OUTPUT_DIR/nbest_predictions.json --output_path=$OUTPUT_DIR
 ```
-This will generate `BioASQform_BioASQ-answer.json` in `{output_dir}`.
+This will generate `BioASQform_BioASQ-answer.json` in `$OUTPUT_DIR`.
 Clone **[`evaluation code`](https://github.com/BioASQ/Evaluation-Measures)** from BioASQ github and run evaluation code on `Evaluation-Measures` directory. Please note that you should always put 5 as parameter for -e.
 ```
 $ cd Evaluation-Measures
