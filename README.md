@@ -4,7 +4,7 @@ This repository provides the code for fine-tuning BioBERT, a biomedical language
 ## Installation
 Sections below describe the installation and the fine-tuning process of BioBERT based on Tensorflow. If you are not familiar with coding and just want to recognize biomedical entities in your text using BioBERT, please use [this tool](https://bern.korea.ac.kr) which uses BioBERT for multi-type NER and normalization.
 
-To fine-tune BioBERT, you need to download [pre-trained weights of BioBERT](https://github.com/naver/biobert-pretrained). After downloading the pre-trained weights, use `requirements.txt` to install BioBERT as follows:
+To fine-tune BioBERT, you need to download the [pre-trained weights of BioBERT](https://github.com/naver/biobert-pretrained). After downloading the pre-trained weights, use `requirements.txt` to install BioBERT as follows:
 ```bash
 $ git clone https://github.com/dmis-lab/biobert.git
 $ cd biobert; pip install -r requirements.txt
