@@ -14,7 +14,7 @@ Note that this repository is based on the [BERT repository](https://github.com/g
 ## Quick Links
 Link | Detail
 ------------- | -------------
-[Pre-trained Weights](https://github.com/naver/biobert-pretrained) | Repository for pre-trained weights of BioBERT
+[Pre-trained weights](https://github.com/naver/biobert-pretrained) | Repository for pre-trained weights of BioBERT
 [BERN](https://bern.korea.ac.kr) | Web-based biomedical NER + normalization using BioBERT
 [7th BioASQ](https://github.com/dmis-lab/bioasq-biobert) | Code for the seventh BioASQ challenge winning model (factoid/yesno/list)
 [Paper](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/btz682/5566506) | Paper link with [BibTeX](https://github.com/dmis-lab/biobert#citation) (Bioinformatics)
@@ -31,14 +31,19 @@ We provide a pre-processed version of benchmark datasets for each task as follow
 *   **[`Relation Extraction`](https://drive.google.com/open?id=1-jDKGcXREb2X9xTFnuiJ36PvsqoyHWcw)**: (2.5 MB), 2 datasets on biomedical relation extraction
 *   **[`Question Answering`](https://drive.google.com/open?id=19ft5q44W4SuptJgTwR84xZjsHg1jvjSZ)**: (5.23 MB), 3 datasets on biomedical question answering task.
 
-You can simply run `download.sh` to download all datasets at once.
+You can simply run `download.sh` to download all the datasets at once.
 ```bash
 $ ./download.sh
 ```
-This will download all datasets under the folder `datasets`. Due to the copyright issue, we provide links of some datasets as follows: **[`2010 i2b2/VA`](https://www.i2b2.org/NLP/DataSets/Main.php)**, **[`ChemProt`](http://www.biocreative.org/)**.
+This will download the datasets under the folder `datasets`. Due to the copyright issue, we provide links of some datasets as follows: **[`2010 i2b2/VA`](https://www.i2b2.org/NLP/DataSets/Main.php)**, **[`ChemProt`](http://www.biocreative.org/)**.
 
 ## Fine-tuning BioBERT
-After downloading one of the pre-trained weights, unpack it to any directory you want, which we will denote as `$BIOBERT_DIR`. 
+After downloading one of the pre-trained weights, unpack it to any directory you want, and we will denote this as `$BIOBERT_DIR`. For instance, when using BioBERT v1.1 (+ PubMed 1M), set `BIOBERT_DIR` environment variable as:
+```bash
+$ export BIOBERT_DIR=./biobert_v1.1_pubmed
+$ echo $BIOBERT_DIR
+>>> ./biobert_v1.1_pubmed
+```
 
 ### Named Entity Recognition (NER)
 Download and unpack the NER datasets provided above. `$NER_DIR` indicates a folder for a single dataset which should include `train_dev.tsv`, `train.tsv`, `devel.tsv` and `test.tsv`. For example, `export NER_DIR=~/bioBERT/biodatasets/NERdata/NCBI-disease`. Following command runs fine-tuining code on NER with default arguments.
