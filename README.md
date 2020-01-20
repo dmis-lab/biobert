@@ -74,12 +74,12 @@ Use `./biocodes/ner_detokenize.py` to obtain word level prediction file.
 ```
 $ python biocodes/ner_detokenize.py --token_test_path=$OUTPUT_DIR/token_test.txt --label_test_path=$OUTPUT_DIR/label_test.txt --answer_path=$NER_DIR/test.tsv --output_dir=$OUTPUT_DIR
 ```
-This will generate `NER_result_conll.txt` in `$OUTPUT_DIR`. Use `conlleval.pl` in `./biocodes/` for entity-level exact match evaluation results.
+This will generate `NER_result_conll.txt` in `$OUTPUT_DIR`. Use `./biocodes/conlleval.pl` for entity-level exact match evaluation results.
 ```
 $ perl biocodes/conlleval.pl < $OUTPUT_DIR/NER_result_conll.txt
 ```
 
-The entity-level results for NCBI-disease dataset will be like:
+The entity-level results for the NCBI disease corpus will be like:
 ```
 processed 24497 tokens with 960 phrases; found: 993 phrases; correct: 866.
 accuracy:  98.57%; precision:  87.21%; recall:  90.21%; FB1:  88.68
@@ -98,7 +98,7 @@ Following command runs fine-tuining code on RE with default arguments.
 ```
 $ python run_re.py --task_name=$TASK_NAME --do_train=true --do_eval=true --do_predict=true --vocab_file=$BIOBERT_DIR/vocab.txt --bert_config_file=$BIOBERT_DIR/bert_config.json --init_checkpoint=$BIOBERT_DIR/model.ckpt-1000000 --max_seq_length=128 --train_batch_size=32 --learning_rate=2e-5 --num_train_epochs=3.0 --do_lower_case=false --data_dir=$RE_DIR --output_dir=$OUTPUT_DIR
 ```
-The predictions will be saved into a file called `test_results.tsv` in the `$OUTPUT_DIR`. Then, use `./biocodes/re_eval.py` for the evaluation. Note that the CHEMPROT dataset is a multi-class classification dataset and to evaluate the CHEMPROT result, you should run `re_eval.py` with additional `--task=chemprot` flag.
+The predictions will be saved into a file called `test_results.tsv` in the `$OUTPUT_DIR`. Use `./biocodes/re_eval.py` for the evaluation. Note that the CHEMPROT dataset is a multi-class classification dataset and to evaluate the CHEMPROT result, you should run `re_eval.py` with additional `--task=chemprot` flag.
 ```
 $ python ./biocodes/re_eval.py --output_path=$OUTPUT_DIR/test_results.tsv --answer_path=$RE_DIR/test.tsv
 ```
@@ -110,7 +110,7 @@ specificity : 67.19%
 f1 score    : 83.52%
 precision   : 75.87%
 ```
-Please be aware that you have to move `$OUTPUT_DIR` to make new model. As some RE datasets are 10-fold divided, you have to make different output directories to train/test a model with a different fold (e.g., `$ export OUTPUT_DIR=./re_outputs_2`).
+Please be aware that you have to move `$OUTPUT_DIR` to make a new model. For instance, as some RE datasets are in 10-fold, you have to make a different output directory to train/test a model for a different fold (e.g., `$ export OUTPUT_DIR=./re_outputs_2`).
 
 ### Question Answering (QA)
 For BioASQ, you need the original datasets from the official BioASQ website. Please register in [BioASQ website](http://participants-area.bioasq.org) and download the BioASQ data from **[`BioASQ Task B`](http://participants-area.bioasq.org/Tasks/A/getData/)**. In addition to the pre-processed data provided above, unpack it to a directory `$QA_DIR`. For example, with `$OUTPUT_DIR` for QA outputs, set as:
@@ -124,8 +124,8 @@ Please use `BioASQ-*.json` for training and testing the model which is the pre-p
 ```
 $ python run_qa.py --do_train=True --do_predict=True --vocab_file=$BIOBERT_DIR/vocab.txt --bert_config_file=$BIOBERT_DIR/bert_config.json --init_checkpoint=$BIOBERT_DIR/model.ckpt-1000000 --max_seq_length=384 --train_batch_size=12 --learning_rate=5e-6 --doc_stride=128 --num_train_epochs=5.0 --do_lower_case=False --train_file=$QA_DIR/BioASQ-train-4b.json --predict_file=$QA_DIR/BioASQ-test-4b-1.json --output_dir=$OUTPUT_DIR
 ```
-The predictions will be saved into a file called `predictions.json` and `nbest_predictions.json` in the `$OUTPUT_DIR`.
-Run `./biocodes/transform_nbset2bioasqform.py` to convert `nbest_predictions.json` to BioASQ JSON format, which will be used for the official evaluation.
+The predictions will be saved into a file called `predictions.json` and `nbest_predictions.json` in `$OUTPUT_DIR`.
+Run `./biocodes/transform_nbset2bioasqform.py` to convert `nbest_predictions.json` to the BioASQ JSON format, which will be used for the official evaluation.
 ```
 $ python ./biocodes/transform_nbset2bioasqform.py --nbest_path=$OUTPUT_DIR/nbest_predictions.json --output_path=$OUTPUT_DIR
 ```
