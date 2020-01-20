@@ -72,11 +72,11 @@ Note that this result is the token-level evaluation measure while the official e
 The results of `python run_ner.py` will be recorded as two files: `token_test.txt` and `label_test.txt` in `$OUTPUT_DIR`. 
 Use `ner_detokenize.py` in `./biocodes/` to obtain word level prediction file.
 ```
-$ python biocodes/ner_detokenize.py --token_test_path=/tmp/bioner/token_test.txt --label_test_path=/tmp/bioner/label_test.txt --answer_path=$NER_DIR/test.tsv --output_dir=$OUTPUT_DIR
+$ python biocodes/ner_detokenize.py --token_test_path=$OUTPUT_DIR/token_test.txt --label_test_path=$OUTPUT_DIR/label_test.txt --answer_path=$NER_DIR/test.tsv --output_dir=$OUTPUT_DIR
 ```
 This will generate `NER_result_conll.txt` in `$OUTPUT_DIR`. Use `conlleval.pl` in `./biocodes/` for entity-level exact match evaluation results.
 ```
-$ perl biocodes/conlleval.pl < /tmp/bioner/NER_result_conll.txt
+$ perl biocodes/conlleval.pl < $OUTPUT_DIR/NER_result_conll.txt
 ```
 
 The entity-level results for NCBI-disease dataset will be like:
