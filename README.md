@@ -104,10 +104,10 @@ $ python ./biocodes/re_eval.py --output_path=$OUTPUT_DIR/test_results.tsv --answ
 ```
 The result for GAD dataset will be like this:
 ```
-recall      : 92.88%
-specificity : 67.19%
-f1 score    : 83.52%
-precision   : 75.87%
+f1 score    : 83.74%
+recall      : 90.75%
+precision   : 77.74%
+specificity : 71.15%
 ```
 Please be aware that you have to change `$OUTPUT_DIR` to train/test a new model. For instance, as some RE datasets are in 10-fold, you have to make a different output directory to train/test a model for a different fold (e.g., `$ export OUTPUT_DIR=./re_outputs_2`).
 
