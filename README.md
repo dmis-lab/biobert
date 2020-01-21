@@ -115,7 +115,7 @@ Please be aware that you have to change `$OUTPUT_DIR` to train/test a new model.
 For BioASQ, you need the original datasets from the official BioASQ website. Please register in [BioASQ website](http://participants-area.bioasq.org) and download the BioASQ data from **[`BioASQ Task B`](http://participants-area.bioasq.org/Tasks/A/getData/)**. In addition to the pre-processed data provided above, unpack it to a directory `$QA_DIR`. For example, with `$OUTPUT_DIR` for QA outputs, set as:
 
 ```bash
-$ export QA_DIR=./datasets/QA
+$ export QA_DIR=./datasets/QA/BioASQ
 $ export OUTPUT_DIR=./qa_outputs
 ```
 
