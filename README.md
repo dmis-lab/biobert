@@ -175,7 +175,6 @@ Please see the LICENSE file for details. Downloading data indicates your accepta
 }
 ```
 
-## Contact information
-
+## Contact Information
 For help or issues using BioBERT, please submit a GitHub issue. Please contact Jinhyuk Lee
 (`lee.jnhk (at) gmail.com`), or Wonjin Yoon (`wonjin.info (at) gmail.com`) for communication related to BioBERT.
