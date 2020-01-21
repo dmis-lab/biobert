@@ -121,7 +121,7 @@ $ export OUTPUT_DIR=./qa_outputs
 
 Please use `BioASQ-*.json` for training and testing the model which is the pre-processed format for BioBERT. Following command runs fine-tuining code on QA with default arguments.
 ```
-$ python run_qa.py --do_train=True --do_predict=True --vocab_file=$BIOBERT_DIR/vocab.txt --bert_config_file=$BIOBERT_DIR/bert_config.json --init_checkpoint=$BIOBERT_DIR/model.ckpt-1000000 --max_seq_length=384 --train_batch_size=12 --learning_rate=5e-6 --doc_stride=128 --num_train_epochs=5.0 --do_lower_case=False --train_file=$QA_DIR/BioASQ-train-4b.json --predict_file=$QA_DIR/BioASQ-test-4b-1.json --output_dir=$OUTPUT_DIR
+$ python run_qa.py --do_train=True --do_predict=True --vocab_file=$BIOBERT_DIR/vocab.txt --bert_config_file=$BIOBERT_DIR/bert_config.json --init_checkpoint=$BIOBERT_DIR/model.ckpt-1000000 --max_seq_length=384 --train_batch_size=12 --learning_rate=5e-6 --doc_stride=128 --num_train_epochs=5.0 --do_lower_case=False --train_file=$QA_DIR/BioASQ-train-factoid-4b.json --predict_file=$QA_DIR/BioASQ-test-factoid-4b-1.json --output_dir=$OUTPUT_DIR
 ```
 The predictions will be saved into a file called `predictions.json` and `nbest_predictions.json` in `$OUTPUT_DIR`.
 Run `./biocodes/transform_nbset2bioasqform.py` to convert `nbest_predictions.json` to the BioASQ JSON format, which will be used for the official evaluation.
