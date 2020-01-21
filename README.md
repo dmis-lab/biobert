@@ -154,7 +154,7 @@ $ java -Xmx10G -cp $CLASSPATH:./flat/BioASQEvaluation/dist/BioASQEvaluation.jar 
 ```
 As our model is only on factoid questions, the result will be like,
 ```
-0.0 0.4358974358974359 0.6153846153846154 0.5072649572649572 0.0 0.0 0.0 0.0 0.0 0.0
+0.0 0.3076923076923077 0.5384615384615384 0.394017094017094 0.0 0.0 0.0 0.0 0.0 0.0
 ```
 where the second, third and fourth numbers will be SAcc, LAcc, and MRR of factoid questions respectively.
 For list and yes/no type questions, please refer to our repository for [BioBERT at the 7th BioASQ Challenge](https://github.com/dmis-lab/bioasq-biobert).
