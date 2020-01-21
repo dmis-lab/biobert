@@ -69,11 +69,11 @@ The token-level evaluation result will be printed as stdout format.
 For example, the result for NCBI-disease dataset will be like this:
 ```
 INFO:tensorflow:***** token-level evaluation results *****
-INFO:tensorflow:  eval_f = 0.9028707
-INFO:tensorflow:  eval_precision = 0.8839457
-INFO:tensorflow:  eval_recall = 0.92273223
+INFO:tensorflow:  eval_f = 0.8972311
+INFO:tensorflow:  eval_precision = 0.88150835
+INFO:tensorflow:  eval_recall = 0.9136615
 INFO:tensorflow:  global_step = 2571
-INFO:tensorflow:  loss = 25.894125
+INFO:tensorflow:  loss = 28.247158
 ```
 (tips : You should go up a few lines to find the result. It comes before `INFO:tensorflow:**** Trainable Variables ****` )
 
@@ -91,9 +91,9 @@ $ perl biocodes/conlleval.pl < $OUTPUT_DIR/NER_result_conll.txt
 
 The entity-level results for the NCBI disease corpus will be like:
 ```
-processed 24497 tokens with 960 phrases; found: 993 phrases; correct: 866.
-accuracy:  98.57%; precision:  87.21%; recall:  90.21%; FB1:  88.68
-             MISC: precision:  87.21%; recall:  90.21%; FB1:  88.68  993
+processed 24497 tokens with 960 phrases; found: 983 phrases; correct: 852.
+accuracy:  98.49%; precision:  86.67%; recall:  88.75%; FB1:  87.70
+             MISC: precision:  86.67%; recall:  88.75%; FB1:  87.70  983
 ``` 
 Note that this is a sample run of an NER model.
 The performance of NER models usually converges at more than 50 epochs (learning rate = 1e-5 is recommended).
