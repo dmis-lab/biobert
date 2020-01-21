@@ -119,7 +119,9 @@ $ export QA_DIR=./datasets/QA/BioASQ
 $ export OUTPUT_DIR=./qa_outputs
 ```
 
-Please use `BioASQ-*.json` for training and testing the model which is the pre-processed format for BioBERT. Following command runs fine-tuining code on QA with default arguments.
+Files named as `BioASQ-*.json` are used for training and testing the model which are the pre-processed format for BioBERT.
+Note that we pre-trained our model on SQuAD dataset to get state-of-the-art performance (see [here](https://github.com/dmis-lab/bioasq-biobert) to get BioBERT pre-trained on SQuAD), and you might have to change `$BIOBERT_DIR` accordingly.
+Following command runs fine-tuining code on QA with default arguments.
 ```
 $ python run_qa.py --do_train=True --do_predict=True --vocab_file=$BIOBERT_DIR/vocab.txt --bert_config_file=$BIOBERT_DIR/bert_config.json --init_checkpoint=$BIOBERT_DIR/model.ckpt-1000000 --max_seq_length=384 --train_batch_size=12 --learning_rate=5e-6 --doc_stride=128 --num_train_epochs=5.0 --do_lower_case=False --train_file=$QA_DIR/BioASQ-train-factoid-4b.json --predict_file=$QA_DIR/BioASQ-test-factoid-4b-1.json --output_dir=$OUTPUT_DIR
 ```
@@ -139,7 +141,6 @@ As our model is only on factoid questions, the result will be like
 0.0 0.4358974358974359 0.6153846153846154 0.5072649572649572 0.0 0.0 0.0 0.0 0.0 0.0
 ```
 where the second, third and fourth numbers will be SAcc, LAcc, and MRR of factoid questions respectively.
-Note that we pre-trained our model on SQuAD dataset to get state-of-the-art performance (see [here](https://github.com/dmis-lab/bioasq-biobert) to get BioBERT pre-trained on SQuAD).
 For list and yes/no type questions, please refer to our repository for [BioBERT at the 7th BioASQ Challenge](https://github.com/dmis-lab/bioasq-biobert).
 
 ## License and Disclaimer
