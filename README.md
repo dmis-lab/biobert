@@ -139,7 +139,7 @@ As our model is only on factoid questions, the result will be like
 0.0 0.4358974358974359 0.6153846153846154 0.5072649572649572 0.0 0.0 0.0 0.0 0.0 0.0
 ```
 where the second, third and fourth numbers will be SAcc, LAcc, and MRR of factoid questions respectively.
-Note that we pre-trained our model on SQuAD dataset to get state-of-the-art performance. Please check our paper for details.
+Note that we pre-trained our model on SQuAD dataset to get state-of-the-art performance (see [here](https://github.com/dmis-lab/bioasq-biobert) to get BioBERT pre-trained on SQuAD). Please check our paper for details.
 
 For list and yes/no type questions, please refer to our [BioBERT at BioASQ repository](https://github.com/dmis-lab/bioasq-biobert).
 
