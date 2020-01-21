@@ -126,7 +126,7 @@ Please be aware that you have to change `$OUTPUT_DIR` to train/test a new model.
 For instance, as most RE datasets are in 10-fold, you have to make a different output directory to train/test a model for a different fold (e.g., `$ export OUTPUT_DIR=./re_outputs_2`).
 
 ### Question Answering (QA)
-To use the BioASQ dataset, you need to register in [BioASQ website](http://participants-area.bioasq.org/general_information/general_information_registration/) which authorizes the use of the dataset.
+To use the BioASQ dataset, you need to register in the [BioASQ website](http://participants-area.bioasq.org/general_information/general_information_registration/) which authorizes the use of the dataset.
 Please unpack the pre-processed BioASQ dataset provided above to a directory `$QA_DIR`.
 For example, with `$OUTPUT_DIR` for QA outputs, set as:
 ```bash
