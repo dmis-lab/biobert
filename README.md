@@ -46,7 +46,7 @@ Due to the copyright issue of other datasets, we provide links of those datasets
 
 ## Fine-tuning BioBERT
 After downloading one of the pre-trained weights, unpack it to any directory you want, and we will denote this as `$BIOBERT_DIR`.
-For instance, when using BioBERT v1.1 (+ PubMed 1M), set `BIOBERT_DIR` environment variable as:
+For instance, when using BioBERT-Base v1.1 (+ PubMed 1M), set `BIOBERT_DIR` environment variable as:
 ```bash
 $ export BIOBERT_DIR=./biobert_v1.1_pubmed
 $ echo $BIOBERT_DIR
