@@ -3,6 +3,16 @@ This repository provides the code for fine-tuning BioBERT, a biomedical language
 Please refer to our paper [BioBERT: a pre-trained biomedical language representation model for biomedical text mining](http://doi.org/10.1093/bioinformatics/btz682) for more details.
 This project is done by [DMIS-Lab](https://dmis.korea.ac.kr).
 
+## Download
+We provide three combinations of pre-trained weights: BioBERT (+ PubMed), BioBERT (+ PMC), and BioBERT (+ PubMed + PMC).
+Pre-training was based on the [original BERT code](https://github.com/google-research/bert) provided by Google, and training details are described in our paper. Currently available versions of pre-trained weights are as follows:
+
+* **[BioBERT-Base v1.1 (+ PubMed 1M)](https://drive.google.com/file/d/1R84voFKHfWV9xjzeLzWBbmY1uOMYpnyD/view?usp=sharing)** - based on BERT-base-Cased (same vocabulary)
+* **[BioBERT-Large v1.1 (+ PubMed 1M)](https://drive.google.com/file/d/1GJpGjQj6aZPV-EfbiQELpBkvlGtoKiyA/view?usp=sharing)** - based on BERT-large-Cased (custom 30k vocabulary), [NER/QA Results](https://github.com/dmis-lab/biobert/wiki/BioBERT-Large-Results)
+* **[BioBERT-Base v1.0 (+ PubMed 200K)](https://drive.google.com/file/d/17j6pSKZt5TtJ8oQCDNIwlSZ0q5w7NNBg/view?usp=sharing)** - based on BERT-base-Cased (same vocabulary)
+* **[BioBERT-Base v1.0 (+ PMC 270K)](https://drive.google.com/file/d/1LiAJklso-DCAJmBekRTVEvqUOfm0a9fX/view?usp=sharing)** - based on BERT-base-Cased (same vocabulary)
+* **[BioBERT-Base v1.0 (+ PubMed 200K + PMC 270K)](https://drive.google.com/file/d/1jGUu2dWB1RaeXmezeJmdiPKQp3ZCmNb7/view?usp=sharing)** - based on BERT-base-Cased (same vocabulary)
+
 ## Installation
 Sections below describe the installation and the fine-tuning process of BioBERT based on Tensorflow.
 If you are not familiar with coding and just want to recognize biomedical entities in your text using BioBERT, please use [this tool](https://bern.korea.ac.kr) which uses BioBERT for multi-type NER and normalization.
@@ -20,8 +30,8 @@ You might want to install `java` to use the official evaluation script of BioASQ
 ## Quick Links
 Link | Detail
 ------------- | -------------
-[Pre-trained weights](https://github.com/naver/biobert-pretrained) | Repository for pre-trained weights of BioBERT
 [BERN](https://bern.korea.ac.kr) | Web-based biomedical NER + normalization using BioBERT
+[covidsearch](https://covidsearch.korea.ac.kr) | BioBERT based real-time question answering model for COVID-19
 [7th BioASQ](https://github.com/dmis-lab/bioasq-biobert) | Code for the seventh BioASQ challenge winning model (factoid/yesno/list)
 [Paper](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/btz682/5566506) | Paper link with [BibTeX](https://github.com/dmis-lab/biobert#citation) (Bioinformatics)
 
