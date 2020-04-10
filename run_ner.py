@@ -55,7 +55,7 @@ flags.DEFINE_bool(
 )
 
 flags.DEFINE_integer(
-    "max_seq_length", 128,
+    "max_seq_length", 128, # 384 recommended for longer sentences
     "The maximum total input sequence length after WordPiece tokenization."
 )
 
@@ -122,7 +122,6 @@ class InputFeatures(object):
         self.input_mask = input_mask
         self.segment_ids = segment_ids
         self.label_ids = label_ids
-        #self.label_mask = label_mask
 
 
 class DataProcessor(object):
@@ -143,40 +142,35 @@ class DataProcessor(object):
     @classmethod
     def _read_data(cls, input_file):
         """Reads a BIO data."""
-        with open(input_file) as f:
-            lines = []
-            words = []
-            labels = []
-            for line in f:
-                contends = line.strip()
-                if len(contends) == 0:
-                    assert len(words) == len(labels)
-                    if len(words) > 30:
-                        while len(words) > 30:
-                            tmplabel = labels[:30]
-                            for iidx in range(len(tmplabel)):
-                                if tmplabel.pop() == 'O':
-                                     break
-                            l = ' '.join([label for label in labels[:len(tmplabel)+1] if len(label) > 0])
-                            w = ' '.join([word for word in words[:len(tmplabel)+1] if len(word) > 0])
-                            lines.append([l, w])
-                            words = words[len(tmplabel)+1:]
-                            labels = labels[len(tmplabel)+1:]
-
-                    if len(words) == 0:
-                        continue
-                    l = ' '.join([label for label in labels if len(label) > 0])
-                    w = ' '.join([word for word in words if len(word) > 0])
-                    lines.append([l, w])
+        inpFilept = open(input_file)
+        lines = []
+        words = []
+        labels = []
+        for lineIdx, line in enumerate(inpFilept):
+            contents = line.splitlines()[0]
+            lineList = contents.split()
+            if len(lineList) == 0: # For blank line
+                assert len(words) == len(labels), "lineIdx: %s,  len(words)(%s) != len(labels)(%s) \n %s\n%s"%(lineIdx, len(words), len(labels), " ".join(words), " ".join(labels))
+                if len(words) != 0:
+                    wordSent = " ".join(words)
+                    labelSent = " ".join(labels)
+                    lines.append((labelSent, wordSent))
                     words = []
                     labels = []
-                    continue
-                
-                word = line.strip().split()[0]
-                label = line.strip().split()[-1]
-                words.append(word)
-                labels.append(label)
-            return lines
+                else: 
+                    print("Two continual empty lines detected!")
+            else:
+                words.append(lineList[0])
+                labels.append(lineList[-1])
+        if len(words) != 0:
+            wordSent = " ".join(words)
+            labelSent = " ".join(labels)
+            lines.append((labelSent, wordSent))
+            words = []
+            labels = []
+
+        inpFilept.close()
+        return lines
 
 class NerProcessor(DataProcessor):
     def get_train_examples(self, data_dir):
@@ -195,7 +189,7 @@ class NerProcessor(DataProcessor):
 
 
     def get_labels(self):
-        return ["B", "I", "O", "X", "[CLS]", "[SEP]"] 
+        return ["[PAD]", "B", "I", "O", "X", "[CLS]", "[SEP]"] 
 
     def _create_example(self, lines, set_type):
         examples = []
@@ -212,30 +206,32 @@ def write_tokens(tokens,mode):
         path = os.path.join(FLAGS.output_dir, "token_"+mode+".txt")
         wf = open(path,'a')
         for token in tokens:
-            if token!="**NULL**":
+            if token!="[PAD]":
                 wf.write(token+'\n')
         wf.close()
 
 def convert_single_example(ex_index, example, label_list, max_seq_length, tokenizer,mode):
     label_map = {}
-    for (i, label) in enumerate(label_list,1):
+    for i, label in enumerate(label_list):
         label_map[label] = i
-    with open(os.path.join(FLAGS.output_dir, 'label2id.pkl'),'wb') as w:
+    with open(os.path.join(FLAGS.output_dir,'label2id.pkl'),'wb') as w:
         pickle.dump(label_map,w)
-    textlist = example.text.split(' ')
-    labellist = example.label.split(' ')
+
+    textlist = example.text.split()
+    labellist = example.label.split()
     tokens = []
     labels = []
     for i, word in enumerate(textlist):
         token = tokenizer.tokenize(word)
         tokens.extend(token)
         label_1 = labellist[i]
-        for m in range(len(token)):
+        for m,  tok in enumerate(token):
             if m == 0:
                 labels.append(label_1)
             else:
                 labels.append("X")
-    # tokens = tokenizer.tokenize(example.text)
+
+    # drop if token is longer than max_seq_length
     if len(tokens) >= max_seq_length - 1:
         tokens = tokens[0:(max_seq_length - 2)]
         labels = labels[0:(max_seq_length - 2)]
@@ -244,7 +240,6 @@ def convert_single_example(ex_index, example, label_list, max_seq_length, tokeni
     label_ids = []
     ntokens.append("[CLS]")
     segment_ids.append(0)
-    # append("O") or append("[CLS]") not sure!
     label_ids.append(label_map["[CLS]"])
     for i, token in enumerate(tokens):
         ntokens.append(token)
@@ -252,27 +247,26 @@ def convert_single_example(ex_index, example, label_list, max_seq_length, tokeni
         label_ids.append(label_map[labels[i]])
     ntokens.append("[SEP]")
     segment_ids.append(0)
-    # append("O") or append("[SEP]") not sure!
     label_ids.append(label_map["[SEP]"])
+
     input_ids = tokenizer.convert_tokens_to_ids(ntokens)
+    
+    # The mask has 1 for real tokens and 0 for padding tokens.
     input_mask = [1] * len(input_ids)
-    #label_mask = [1] * len(input_ids)
+    
+    # Zero-pad up to the sequence length.
     while len(input_ids) < max_seq_length:
         input_ids.append(0)
         input_mask.append(0)
         segment_ids.append(0)
-        # we don't concerned about it!
         label_ids.append(0)
-        ntokens.append("**NULL**")
-        #label_mask.append(0)
-    # print(len(input_ids))
+        ntokens.append("[PAD]")
     assert len(input_ids) == max_seq_length
     assert len(input_mask) == max_seq_length
     assert len(segment_ids) == max_seq_length
     assert len(label_ids) == max_seq_length
-    #assert len(label_mask) == max_seq_length
 
-    if ex_index < 5:
+    if ex_index < 4 : # Examples before model run
         tf.logging.info("*** Example ***")
         tf.logging.info("guid: %s" % (example.guid))
         tf.logging.info("tokens: %s" % " ".join(
@@ -292,7 +286,6 @@ def convert_single_example(ex_index, example, label_list, max_seq_length, tokeni
     )
     write_tokens(ntokens,mode)
     return feature
-
 
 def filed_based_convert_examples_to_features(
         examples, label_list, max_seq_length, tokenizer, output_file,mode=None
@@ -378,7 +371,7 @@ def create_model(bert_config, is_training, input_ids, input_mask,
         output_layer = tf.reshape(output_layer, [-1, hidden_size])
         logits = tf.matmul(output_layer, output_weight, transpose_b=True)
         logits = tf.nn.bias_add(logits, output_bias)
-        logits = tf.reshape(logits, [-1, FLAGS.max_seq_length, 7])
+        logits = tf.reshape(logits, [-1, FLAGS.max_seq_length, num_labels])
         # mask = tf.cast(input_mask,tf.float32)
         # loss = tf.contrib.seq2seq.sequence_loss(logits,labels,mask)
         # return (loss, logits, predict)
@@ -388,8 +381,8 @@ def create_model(bert_config, is_training, input_ids, input_mask,
         per_example_loss = -tf.reduce_sum(one_hot_labels * log_probs, axis=-1)
         loss = tf.reduce_sum(per_example_loss)
         probabilities = tf.nn.softmax(logits, axis=-1)
-        predict = tf.argmax(probabilities,axis=-1)
-        return (loss, per_example_loss, logits, log_probs, predict)
+        predict = {"predict": tf.argmax(probabilities,axis=-1), "log_probs": log_probs}
+        return (loss, per_example_loss, logits, predict)
         ##########################################################################
         
 def model_fn_builder(bert_config, num_labels, init_checkpoint, learning_rate,
@@ -406,13 +399,15 @@ def model_fn_builder(bert_config, num_labels, init_checkpoint, learning_rate,
         #label_mask = features["label_mask"]
         is_training = (mode == tf.estimator.ModeKeys.TRAIN)
 
-        (total_loss,  per_example_loss, logits, log_probs, predicts) = create_model(
-            bert_config, is_training, input_ids, input_mask,segment_ids, label_ids,
+        (total_loss, per_example_loss, logits, predictsDict) = create_model(
+            bert_config, is_training, input_ids, input_mask, segment_ids, label_ids,
             num_labels, use_one_hot_embeddings)
+        predictsDict["input_mask"] = input_mask
         tvars = tf.trainable_variables()
         scaffold_fn = None
         if init_checkpoint:
             (assignment_map, initialized_variable_names) = modeling.get_assignment_map_from_checkpoint(tvars,init_checkpoint)
+            tf.train.init_from_checkpoint(init_checkpoint, assignment_map)
             if use_tpu:
                 def tpu_scaffold():
                     tf.train.init_from_checkpoint(init_checkpoint, assignment_map)
@@ -437,13 +432,14 @@ def model_fn_builder(bert_config, num_labels, init_checkpoint, learning_rate,
                 loss=total_loss,
                 train_op=train_op,
                 scaffold_fn=scaffold_fn)
-        elif mode == tf.estimator.ModeKeys.EVAL:      
-            def metric_fn(per_example_loss, label_ids, logits):
+        elif mode == tf.estimator.ModeKeys.EVAL:
+            
+            def metric_fn(per_example_loss, label_ids, logits, num_labels):
             # def metric_fn(label_ids, logits):
                 predictions = tf.argmax(logits, axis=-1, output_type=tf.int32)
-                precision = tf_metrics.precision(label_ids,predictions,7,[1,2],average="macro")
-                recall = tf_metrics.recall(label_ids,predictions,7,[1,2],average="macro")
-                f = tf_metrics.f1(label_ids,predictions,7,[1,2],average="macro")
+                precision = tf_metrics.precision(label_ids,predictions,num_labels,[1,2],average="macro")
+                recall = tf_metrics.recall(label_ids,predictions,num_labels,[1,2],average="macro")
+                f = tf_metrics.f1(label_ids,predictions,num_labels,[1,2],average="macro")
                 #
                 return {
                     "eval_precision":precision,
@@ -451,19 +447,16 @@ def model_fn_builder(bert_config, num_labels, init_checkpoint, learning_rate,
                     "eval_f": f,
                     #"eval_loss": loss,
                 }
-            eval_metrics = (metric_fn, [per_example_loss, label_ids, logits])
+            eval_metrics = (metric_fn, [per_example_loss, label_ids, logits, num_labels])
             # eval_metrics = (metric_fn, [label_ids, logits])
             output_spec = tf.contrib.tpu.TPUEstimatorSpec(
                 mode=mode,
                 loss=total_loss,
                 eval_metrics=eval_metrics,
                 scaffold_fn=scaffold_fn)
-        
         elif mode == tf.estimator.ModeKeys.PREDICT:
             output_spec = tf.contrib.tpu.TPUEstimatorSpec(
-                mode=mode,
-                predictions={"prediction": predicts, "log_probs": log_probs},
-                scaffold_fn=scaffold_fn
+                mode = mode, predictions = predictsDict, scaffold_fn = scaffold_fn
             )
         return output_spec
     return model_fn
@@ -474,8 +467,8 @@ def main(_):
     processors = {
         "ner": NerProcessor
     }
-    if not FLAGS.do_train and not FLAGS.do_eval:
-        raise ValueError("At least one of `do_train` or `do_eval` must be True.")
+    #if not FLAGS.do_train and not FLAGS.do_eval:
+    #    raise ValueError("At least one of `do_train` or `do_eval` must be True.")
 
     bert_config = modeling.BertConfig.from_json_file(FLAGS.bert_config_file)
 
@@ -484,7 +477,9 @@ def main(_):
             "Cannot use sequence length %d because the BERT model "
             "was only trained up to sequence length %d" %
             (FLAGS.max_seq_length, bert_config.max_position_embeddings))
-
+    
+    tf.gfile.MakeDirs(FLAGS.output_dir)
+    
     task_name = FLAGS.task_name.lower()
     if task_name not in processors:
         raise ValueError("Task not found: %s" % (task_name))
@@ -523,7 +518,7 @@ def main(_):
 
     model_fn = model_fn_builder(
         bert_config=bert_config,
-        num_labels=len(label_list)+1,
+        num_labels=len(label_list),
         init_checkpoint=FLAGS.init_checkpoint,
         learning_rate=FLAGS.learning_rate,
         num_train_steps=num_train_steps,
@@ -579,12 +574,28 @@ def main(_):
                 tf.logging.info("  %s = %s", key, str(result[key]))
                 writer.write("%s = %s\n" % (key, str(result[key])))
     if FLAGS.do_predict:
+        label2idPath = os.path.join(FLAGS.output_dir, 'label2id.pkl')
+        if os.path.exists(label2idPath):
+            with open(label2idPath,'rb') as rf:
+                label2id = pickle.load(rf)
+                id2label = {value:key for key,value in label2id.items()}
+        else:
+            tf.logging.info("***** Warning! label2id.pkl not exist *****")
+            tf.logging.info("***** Creating label2id.pkl during predict (not recommended) *****")
+            label2id = {}
+            for i, label in enumerate(label_list):
+                label2id[label] = i
+                id2label = {value:key for key,value in label2id.items()}
+            with open(label2idPath,'wb') as w:
+                pickle.dump(label2id,w)
+                
         token_path = os.path.join(FLAGS.output_dir, "token_test.txt")
-        with open(os.path.join(FLAGS.output_dir, 'label2id.pkl'),'rb') as rf:
-            label2id = pickle.load(rf)
-            id2label = {value:key for key,value in label2id.items()}
         if os.path.exists(token_path):
             os.remove(token_path)
+        token_modi_path = os.path.join(FLAGS.output_dir, "token_modi_test.txt")
+        if os.path.exists(token_modi_path):
+            os.remove(token_modi_path)
+        
         predict_examples = processor.get_test_examples(FLAGS.data_dir)
 
         predict_file = os.path.join(FLAGS.output_dir, "predict.tf_record")
@@ -595,6 +606,7 @@ def main(_):
         tf.logging.info("***** Running prediction*****")
         tf.logging.info("  Num examples = %d", len(predict_examples))
         tf.logging.info("  Batch size = %d", FLAGS.predict_batch_size)
+        tf.logging.info("  Example of predict_examples = %s", predict_examples[0].text)
         if FLAGS.use_tpu:
             # Warning: According to tpu_estimator.py Prediction on TPU is an
             # experimental feature and hence not supported here
@@ -606,36 +618,29 @@ def main(_):
             is_training=False,
             drop_remainder=predict_drop_remainder)
 
-        tokens = list()
-        with open(token_path, 'r') as reader:
-            for line in reader:
-                tok = line.strip()
-                if tok == '[CLS]':
-                    tmp_toks = [tok]
-                elif tok == '[SEP]':
-                    tmp_toks.append(tok)
-                    tokens.append(tmp_toks)
-                else:
-                    tmp_toks.append(tok)
-        
+        result = estimator.predict(input_fn=predict_input_fn)
         prf = estimator.evaluate(input_fn=predict_input_fn, steps=None)
+        
         tf.logging.info("***** token-level evaluation results *****")
         for key in sorted(prf.keys()):
-                tf.logging.info("  %s = %s", key, str(prf[key]))
-
-        result = estimator.predict(input_fn=predict_input_fn)
+            tf.logging.info("  %s = %s", key, str(prf[key]))
+        
         output_predict_file = os.path.join(FLAGS.output_dir, "label_test.txt")
-        output_logits_file = os.path.join(FLAGS.output_dir, "logits_test.txt")
-        with open(output_predict_file,'w') as p_writer:
-            with open(output_logits_file,'w') as l_writer:
-                for pidx, prediction in enumerate(result):
-                    slen = len(tokens[pidx])
-                    
-                    output_line = "\n".join(id2label[id] if id!=0 else id2label[3] for id in prediction['prediction'][:slen]) + "\n" #change to O tag
-                    p_writer.write(output_line)
-                     
-                    output_line = "\n".join('\t'.join(str(log_prob) for log_prob in log_probs) for log_probs in prediction['log_probs'][:slen]) + "\n" 
-                    l_writer.write(output_line)
+        with open(output_predict_file,'w') as writer:
+            for resultIdx, prediction in enumerate(result):
+                # Fix for "padding occurrence amid sentence" error 
+                # (which occasionally cause mismatch between the number of predicted tokens and labels.)
+                assert len(prediction["predict"]) == len(prediction["input_mask"]), "len(prediction['predict']) != len(prediction['input_mask']) Please report us!"
+                predLabelSent = []
+                for predLabel, inputMask in zip(prediction["predict"], prediction["input_mask"]):
+                    # predLabel : Numerical Value
+                    if inputMask != 0:
+                        if predLabel == label2id['[PAD]']:
+                            predLabelSent.append('O')
+                        else:
+                            predLabelSent.append(id2label[predLabel])
+                output_line = "\n".join(predLabelSent) + "\n"
+                writer.write(output_line)
 
 if __name__ == "__main__":
     flags.mark_flag_as_required("data_dir")
@@ -644,3 +649,5 @@ if __name__ == "__main__":
     flags.mark_flag_as_required("bert_config_file")
     flags.mark_flag_as_required("output_dir")
     tf.app.run()
+
+
