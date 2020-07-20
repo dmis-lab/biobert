@@ -13,7 +13,7 @@ We provide five versions of pre-trained weights. Pre-training was based on the [
 * **[BioBERT-Base v1.0 (+ PubMed 200K + PMC 270K)](https://drive.google.com/file/d/1jGUu2dWB1RaeXmezeJmdiPKQp3ZCmNb7/view?usp=sharing)** - based on BERT-base-Cased (same vocabulary)
 
 ## Installation
-Sections below describe the installation and the fine-tuning process of BioBERT based on Tensorflow.
+Sections below describe the installation and the fine-tuning process of BioBERT based on Tensorflow 1 (python version <= 3.7).
 If you are not familiar with coding and just want to recognize biomedical entities in your text using BioBERT, please use [this tool](https://bern.korea.ac.kr) which uses BioBERT for multi-type NER and normalization.
 
 To fine-tune BioBERT, you need to download the [pre-trained weights of BioBERT](https://github.com/naver/biobert-pretrained).
