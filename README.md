@@ -14,6 +14,7 @@ We provide five versions of pre-trained weights. Pre-training was based on the [
 
 ## Installation
 Sections below describe the installation and the fine-tuning process of BioBERT based on Tensorflow 1 (python version <= 3.7).
+For PyTorch version of BioBERT, you can check out [this repository](https://github.com/dmis-lab/biobert-pytorch).
 If you are not familiar with coding and just want to recognize biomedical entities in your text using BioBERT, please use [this tool](https://bern.korea.ac.kr) which uses BioBERT for multi-type NER and normalization.
 
 To fine-tune BioBERT, you need to download the [pre-trained weights of BioBERT](https://github.com/naver/biobert-pretrained).
@@ -29,13 +30,14 @@ You might want to install `java` to use the official evaluation script of BioASQ
 ## Quick Links
 Link | Detail
 ------------- | -------------
+[BioBERT-PyTorch](https://github.com/dmis-lab/biobert-pytorch) | PyTorch-based BioBERT implementation
 [BERN](https://bern.korea.ac.kr) | Web-based biomedical NER + normalization using BioBERT
 [covidAsk](https://covidask.korea.ac.kr) | BioBERT based real-time question answering model for COVID-19
 [7th BioASQ](https://github.com/dmis-lab/bioasq-biobert) | Code for the seventh BioASQ challenge winning model (factoid/yesno/list)
 [Paper](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/btz682/5566506) | Paper link with [BibTeX](https://github.com/dmis-lab/biobert#citation) (Bioinformatics)
 
 ## FAQs
-*   [How can I use BioBERT with PyTorch?](https://github.com/dmis-lab/biobert/issues/2)
+*   [How can I use BioBERT with PyTorch?](https://github.com/dmis-lab/biobert-pytorch)
 *   [Can I get word/sentence embeddings using BioBERT?](https://github.com/dmis-lab/biobert/issues/23)
 *   [How can I pre-train QA models on SQuAD?](https://github.com/dmis-lab/biobert/issues/10)
 *   [What vocabulary does BioBERT use?](https://github.com/naver/biobert-pretrained/issues/1)
