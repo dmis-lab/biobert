@@ -12,6 +12,8 @@ We provide five versions of pre-trained weights. Pre-training was based on the [
 * **[BioBERT-Base v1.0 (+ PMC 270K)](https://drive.google.com/file/d/1LiAJklso-DCAJmBekRTVEvqUOfm0a9fX/view?usp=sharing)** - based on BERT-base-Cased (same vocabulary)
 * **[BioBERT-Base v1.0 (+ PubMed 200K + PMC 270K)](https://drive.google.com/file/d/1jGUu2dWB1RaeXmezeJmdiPKQp3ZCmNb7/view?usp=sharing)** - based on BERT-base-Cased (same vocabulary)
 
+Alternately, you can download pre-trained weights from [here](https://github.com/naver/biobert-pretrained/releases)
+
 ## Installation
 Sections below describe the installation and the fine-tuning process of BioBERT based on Tensorflow 1 (python version <= 3.7).
 For PyTorch version of BioBERT, you can check out [this repository](https://github.com/dmis-lab/biobert-pytorch).
