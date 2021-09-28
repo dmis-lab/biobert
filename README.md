@@ -176,7 +176,7 @@ For list and yes/no type questions, please refer to our repository for [BioBERT 
 Please see the LICENSE file for details. Downloading data indicates your acceptance of our disclaimer.
 
 ## Citation
-```
+```bibtex
 @article{lee2020biobert,
   title={BioBERT: a pre-trained biomedical language representation model for biomedical text mining},
   author={Lee, Jinhyuk and Yoon, Wonjin and Kim, Sungdong and Kim, Donghyeon and Kim, Sunkyu and So, Chan Ho and Kang, Jaewoo},
