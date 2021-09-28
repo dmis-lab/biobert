@@ -177,15 +177,15 @@ Please see the LICENSE file for details. Downloading data indicates your accepta
 
 ## Citation
 ```
-@article{10.1093/bioinformatics/btz682,
-    author = {Lee, Jinhyuk and Yoon, Wonjin and Kim, Sungdong and Kim, Donghyeon and Kim, Sunkyu and So, Chan Ho and Kang, Jaewoo},
-    title = "{BioBERT: a pre-trained biomedical language representation model for biomedical text mining}",
-    journal = {Bioinformatics},
-    year = {2019},
-    month = {09},
-    issn = {1367-4803},
-    doi = {10.1093/bioinformatics/btz682},
-    url = {https://doi.org/10.1093/bioinformatics/btz682},
+@article{lee2020biobert,
+  title={BioBERT: a pre-trained biomedical language representation model for biomedical text mining},
+  author={Lee, Jinhyuk and Yoon, Wonjin and Kim, Sungdong and Kim, Donghyeon and Kim, Sunkyu and So, Chan Ho and Kang, Jaewoo},
+  journal={Bioinformatics},
+  volume={36},
+  number={4},
+  pages={1234--1240},
+  year={2020},
+  publisher={Oxford University Press}
 }
 ```
 
