@@ -1,4 +1,4 @@
-tensorflow-gpu==1.15.2   # GPU version of TensorFlow >= 1.11.0. (should be under 2.0.0)
+tensorflow-gpu==2.5.2   # GPU version of TensorFlow >= 1.11.0. (should be under 2.0.0)
 
 
 
