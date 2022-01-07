@@ -34,7 +34,8 @@ You might want to install `java` to use the official evaluation script of BioASQ
 Link | Detail
 ------------- | -------------
 [BioBERT-PyTorch](https://github.com/dmis-lab/biobert-pytorch) | PyTorch-based BioBERT implementation
-[BERN](https://bern.korea.ac.kr) | Web-based biomedical NER + normalization using BioBERT
+[BERN](http://bern.korea.ac.kr) | Web-based biomedical NER + normalization using BioBERT
+[BERN2](http://bern2.korea.ac.kr) | Advanced Web-based biomedical NER + normalization using BioLM + BioBERT
 [covidAsk](https://covidask.korea.ac.kr) | BioBERT based real-time question answering model for COVID-19
 [7th BioASQ](https://github.com/dmis-lab/bioasq-biobert) | Code for the seventh BioASQ challenge winning model (factoid/yesno/list)
 [Paper](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/btz682/5566506) | Paper link with [BibTeX](https://github.com/dmis-lab/biobert#citation) (Bioinformatics)
