@@ -7,12 +7,13 @@ This project is done by [DMIS-Lab](https://dmis.korea.ac.kr).
 We provide five versions of pre-trained weights. Pre-training was based on the [original BERT code](https://github.com/google-research/bert) provided by Google, and training details are described in our paper. Currently available versions of pre-trained weights are as follows:
 
 * **[BioBERT-Base v1.2 (+ PubMed 1M)](https://huggingface.co/dmis-lab/biobert-base-cased-v1.2)** - trained in the same way as BioBERT-Base v1.1 but includes LM head, which can be useful for probing (available in PyTorch)
-* **[BioBERT-Base v1.1 (+ PubMed 1M)](https://drive.google.com/file/d/1R84voFKHfWV9xjzeLzWBbmY1uOMYpnyD/view?usp=sharing)** - based on BERT-base-Cased (same vocabulary) **(Official checkpoint used for the paper)**
 * **[BioBERT-Large v1.1 (+ PubMed 1M)](https://drive.google.com/file/d/1GJpGjQj6aZPV-EfbiQELpBkvlGtoKiyA/view?usp=sharing)** - based on BERT-large-Cased (custom 30k vocabulary), [NER/QA Results](https://github.com/dmis-lab/biobert/wiki/BioBERT-Large-Results)
-* **[BioBERT-Base v1.0 (+ PubMed 200K)](https://drive.google.com/file/d/17j6pSKZt5TtJ8oQCDNIwlSZ0q5w7NNBg/view?usp=sharing)** - based on BERT-base-Cased (same vocabulary)
-* **[BioBERT-Base v1.0 (+ PMC 270K)](https://drive.google.com/file/d/1LiAJklso-DCAJmBekRTVEvqUOfm0a9fX/view?usp=sharing)** - based on BERT-base-Cased (same vocabulary)
-* **[BioBERT-Base v1.0 (+ PubMed 200K + PMC 270K)](https://drive.google.com/file/d/1jGUu2dWB1RaeXmezeJmdiPKQp3ZCmNb7/view?usp=sharing)** - based on BERT-base-Cased (same vocabulary)
+* **[BioBERT-Base v1.1 (+ PubMed 1M)](https://drive.google.com/file/d/1R84voFKHfWV9xjzeLzWBbmY1uOMYpnyD/view?usp=sharing)** - based on BERT-base-Cased (same vocabulary), [Results in the Paper](http://doi.org/10.1093/bioinformatics/btz682)
+* **[BioBERT-Base v1.0 (+ PubMed 200K)](https://drive.google.com/file/d/17j6pSKZt5TtJ8oQCDNIwlSZ0q5w7NNBg/view?usp=sharing)** - based on BERT-base-Cased (same vocabulary), [Results in the Paper](http://doi.org/10.1093/bioinformatics/btz682)
+* **[BioBERT-Base v1.0 (+ PMC 270K)](https://drive.google.com/file/d/1LiAJklso-DCAJmBekRTVEvqUOfm0a9fX/view?usp=sharing)** - based on BERT-base-Cased (same vocabulary), [Results in the Paper](http://doi.org/10.1093/bioinformatics/btz682)
+* **[BioBERT-Base v1.0 (+ PubMed 200K + PMC 270K)](https://drive.google.com/file/d/1jGUu2dWB1RaeXmezeJmdiPKQp3ZCmNb7/view?usp=sharing)** - based on BERT-base-Cased (same vocabulary), [Results in the Paper](http://doi.org/10.1093/bioinformatics/btz682)
 
+Note that the performances of v1.0 and v1.1 base models (BioBERT-Base v1.0, BioBERT-Base v1.1) are reported in the paper.
 Alternately, you can download pre-trained weights from [here](https://github.com/naver/biobert-pretrained/releases)
 
 ## Installation
