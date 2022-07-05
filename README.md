@@ -49,9 +49,9 @@ Link | Detail
 
 ## Datasets
 We provide a pre-processed version of benchmark datasets for each task as follows:
-*   **[`Named Entity Recognition`](https://drive.google.com/open?id=1OletxmPYNkz2ltOr9pyT0b0iBtUWxslh)**: (17.3 MB), 8 datasets on biomedical named entity recognition
-*   **[`Relation Extraction`](https://drive.google.com/open?id=1-jDKGcXREb2X9xTFnuiJ36PvsqoyHWcw)**: (2.5 MB), 2 datasets on biomedical relation extraction
-*   **[`Question Answering`](https://drive.google.com/open?id=19ft5q44W4SuptJgTwR84xZjsHg1jvjSZ)**: (5.23 MB), 3 datasets on biomedical question answering task.
+*   **[`Named Entity Recognition`](http://nlp.dmis.korea.edu/projects/biobert-2020-checkpoints/NERdata.zip)**: (17.3 MB), 8 datasets on biomedical named entity recognition
+*   **[`Relation Extraction`](http://nlp.dmis.korea.edu/projects/biobert-2020-checkpoints/REdata.zip)**: (2.5 MB), 2 datasets on biomedical relation extraction
+*   **[`Question Answering`](http://nlp.dmis.korea.edu/projects/biobert-2020-checkpoints/QA.zip)**: (5.23 MB), 3 datasets on biomedical question answering task.
 
 You can simply run `download.sh` to download all the datasets at once.
 ```bash
