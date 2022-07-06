@@ -1,10 +1,10 @@
-tensorflow-gpu==1.15.2   # GPU version of TensorFlow >= 1.11.0. (should be under 2.0.0)
-
+tensorflow-gpu==1.15.5   # GPU version of TensorFlow >= 1.11.0. (should be under 2.0.0)
+numpy==1.18.0
 
 
 # To evaluate RE answers :
-sklearn
-pandas==0.23
+scikit-learn==0.24.2
+pandas==1.1.5
 
 # To evaluate BioASQ answers, your system should be able to execute java codes.
 # Please refer https://github.com/BioASQ/Evaluation-Measures for details.
